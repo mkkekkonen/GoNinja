@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt4bk8sgk0jsg"]
+
+[ext_resource type="TileSet" uid="uid://bjkqigqwvc6kr" path="res://tilesets/ninja_tileset.tres" id="1_lteq8"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_lteq8")
+format = 2
