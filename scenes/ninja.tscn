@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://pf6fdjmq6xdj"]
+[gd_scene load_steps=14 format=3 uid="uid://pf6fdjmq6xdj"]
 
 [ext_resource type="Texture2D" uid="uid://b10q2vvo5m5w0" path="res://img/ninja_idle2.png" id="1_0afc6"]
 [ext_resource type="Texture2D" uid="uid://d2yw6ogpgcc2x" path="res://img/ninja_idle1.png" id="1_5wvjh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvxrfyxud0vsy" path="res://img/ninja_walk2.png" id="4_vxnqt"]
 [ext_resource type="Texture2D" uid="uid://cs3aab5phbfbj" path="res://img/ninja_walk3.png" id="5_bpcy0"]
 [ext_resource type="Texture2D" uid="uid://b7cn1tn2ipkon" path="res://img/ninja_walk4.png" id="6_iqht6"]
+[ext_resource type="Script" path="res://scripts/NinjaPhysics.cs" id="7_a47tn"]
 
 [sub_resource type="Animation" id="Animation_4uhr4"]
 length = 0.001
@@ -17,7 +18,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,7 +30,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("CharacterBody2D/Sprite2D:position")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -39,6 +40,22 @@ tracks/1/keys = {
 "values": [Vector2(0, -3), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_23am5"]
+resource_name = "jump"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_vxnqt")]
+}
+
 [sub_resource type="Animation" id="Animation_s46rf"]
 resource_name = "walk"
 length = 0.4
@@ -46,7 +63,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -58,7 +75,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("CharacterBody2D/Sprite2D:position")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -72,8 +89,13 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_4uhr4"),
 "idle": SubResource("Animation_hoomd"),
+"jump": SubResource("Animation_23am5"),
 "walk": SubResource("Animation_s46rf")
 }
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kggp7"]
+radius = 15.0
+height = 60.0
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_group_ = true
@@ -83,6 +105,13 @@ libraries = {
 "": SubResource("AnimationLibrary_xbi8d")
 }
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("7_a47tn")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 scale = Vector2(6, 6)
-texture = ExtResource("6_iqht6")
+texture = ExtResource("3_tmikr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_kggp7")
