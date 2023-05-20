@@ -5,6 +5,7 @@ public partial class NinjaPhysics : CharacterBody2D
 {
   public const float Speed = 300.0f;
   public const float JumpVelocity = -450.0f;
+  public const float Epsilon = 0.1f;
 
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -16,13 +17,29 @@ public partial class NinjaPhysics : CharacterBody2D
     var sprite = GetNode<Sprite2D>("Sprite2D");
     var scale = Math.Abs(sprite.Scale.X);
 
-    if (Velocity.X < 0 && sprite.Scale.X > 0)
+    if (Velocity.X < 0 && !sprite.FlipH)
     {
-      sprite.Scale = new Vector2(-scale, scale);
+      sprite.FlipH = true;
     }
-    else if (Velocity.X > 0 && sprite.Scale.X < 0)
+    else if (Velocity.X > 0 && sprite.FlipH)
     {
-      sprite.Scale = new Vector2(scale, scale);
+      sprite.FlipH = false;
+    }
+
+    var animationPlayer = GetNode<AnimationPlayer>("../../AnimationPlayer");
+    var velocityAbs = Math.Abs(Velocity.X);
+
+    if (!IsOnFloor())
+    {
+      animationPlayer.Play("jump");
+    }
+    else if (velocityAbs >= Epsilon)
+    {
+      animationPlayer.Play("walk");
+    }
+    else if (velocityAbs < Epsilon)
+    {
+      animationPlayer.Play("idle");
     }
   }
 
