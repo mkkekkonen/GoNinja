@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://lcm5eceehcax"]
+
+[ext_resource type="Texture2D" uid="uid://cpmc3yxc0rn15" path="res://img/blob_red1.png" id="1_7nuj7"]
+[ext_resource type="Texture2D" uid="uid://bor0jo05xkdd" path="res://img/blob_red2.png" id="2_gfvww"]
+[ext_resource type="Texture2D" uid="uid://b7g84ogumxjxv" path="res://img/blob_red3.png" id="3_x1t4c"]
+[ext_resource type="Script" path="res://scripts/BlobPhysics.cs" id="4_h0uam"]
+
+[sub_resource type="Animation" id="Animation_n1nr2"]
+resource_name = "move"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_7nuj7"), ExtResource("2_gfvww"), ExtResource("3_x1t4c"), ExtResource("2_gfvww")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterBody2D/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, -6), Vector2(0, -3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kxwji"]
+_data = {
+"move": SubResource("Animation_n1nr2")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q2b05"]
+radius = 15.0
+height = 42.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kxwji")
+}
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("4_h0uam")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_q2b05")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(6, 6)
+texture = ExtResource("1_7nuj7")
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="CharacterBody2D"]
+position = Vector2(-21, -1)
+target_position = Vector2(0, 20)
+
+[node name="RayCast2DRight" type="RayCast2D" parent="CharacterBody2D"]
+position = Vector2(21, -1)
+target_position = Vector2(0, 20)

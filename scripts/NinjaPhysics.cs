@@ -15,7 +15,6 @@ public partial class NinjaPhysics : CharacterBody2D
     base._Process(delta);
 
     var sprite = GetNode<Sprite2D>("Sprite2D");
-    var scale = Math.Abs(sprite.Scale.X);
 
     if (Velocity.X < 0 && !sprite.FlipH)
     {
@@ -26,7 +25,7 @@ public partial class NinjaPhysics : CharacterBody2D
       sprite.FlipH = false;
     }
 
-    var animationPlayer = GetNode<AnimationPlayer>("../../AnimationPlayer");
+    var animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
     var velocityAbs = Math.Abs(Velocity.X);
 
     if (!IsOnFloor())
