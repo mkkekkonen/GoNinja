@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjn3ckuewu3cu"]
+
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_huyk1"]
+[ext_resource type="Texture2D" uid="uid://d2yw6ogpgcc2x" path="res://img/ninja_idle1.png" id="2_e2gjy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_y7673"]
+font = ExtResource("1_huyk1")
+font_size = 72
+
+[sub_resource type="LabelSettings" id="LabelSettings_4nx6e"]
+font = ExtResource("1_huyk1")
+font_size = 48
+font_color = Color(0.65098, 0.556863, 0.823529, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1158.0
+offset_bottom = 648.0
+
+[node name="TitleLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 83.0
+offset_right = 678.0
+offset_bottom = 159.0
+text = "GoNinja"
+label_settings = SubResource("LabelSettings_y7673")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 216.0
+offset_right = 682.0
+offset_bottom = 268.0
+text = "New Game"
+label_settings = SubResource("LabelSettings_4nx6e")
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 367.0
+offset_right = 280.0
+offset_bottom = 533.0
+texture = ExtResource("2_e2gjy")
