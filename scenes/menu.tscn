@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjn3ckuewu3cu"]
+[gd_scene load_steps=6 format=3 uid="uid://cjn3ckuewu3cu"]
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_huyk1"]
+[ext_resource type="Script" path="res://scripts/NewGameLabel.cs" id="2_7d0v4"]
 [ext_resource type="Texture2D" uid="uid://d2yw6ogpgcc2x" path="res://img/ninja_idle1.png" id="2_e2gjy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_y7673"]
@@ -42,6 +43,7 @@ offset_right = 682.0
 offset_bottom = 268.0
 text = "New Game"
 label_settings = SubResource("LabelSettings_4nx6e")
+script = ExtResource("2_7d0v4")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 0
