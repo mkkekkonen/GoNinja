@@ -37,6 +37,13 @@ public partial class Bat : Node2D
   {
     if (Hit)
     {
+      var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
+      if (Hit && !visibilityNotifier.IsOnScreen())
+      {
+        GameState.BatsHit.Remove(GetInstanceId());
+        QueueFree();
+      }
+
       velocity += new Vector2(0, (float)(9.81f * delta * 10));
 
       Position += (velocity * new Vector2(0, (float)delta));

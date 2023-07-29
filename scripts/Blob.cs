@@ -48,6 +48,18 @@ public partial class Blob : Node2D
     }
   }
 
+  public override void _PhysicsProcess(double delta)
+  {
+    base._PhysicsProcess(delta);
+
+    var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("CharacterBody2D/VisibleOnScreenNotifier2D");
+    if (Hit && !visibilityNotifier.IsOnScreen())
+    {
+      GameState.BlobsHit.Remove(GetInstanceId());
+      QueueFree();
+    }
+  }
+
   public void OnAreaEntered(Area2D area)
   {
     if (area.Name == "SwordArea2D" && !GameState.NinjaHit)

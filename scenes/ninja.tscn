@@ -211,6 +211,10 @@ libraries = {
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("7_a47tn")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D"]
+position = Vector2(1.43051e-06, 1.75834e-06)
+scale = Vector2(2.4, 3.5)
+
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(0, -3)
 scale = Vector2(6, 6)

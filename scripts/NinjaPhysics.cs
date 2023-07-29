@@ -14,8 +14,6 @@ public partial class NinjaPhysics : CharacterBody2D
   {
     base._Process(delta);
 
-    GD.Print(GetParent().Name);
-
     var ninja = GetNode<Ninja>("../../Ninja");
     var sprite = GetNode<Sprite2D>("Sprite2D");
 

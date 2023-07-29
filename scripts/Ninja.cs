@@ -26,6 +26,17 @@ public partial class Ninja : Node2D
     }
   }
 
+  public override void _PhysicsProcess(double delta)
+  {
+    base._PhysicsProcess(delta);
+
+    var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("CharacterBody2D/VisibleOnScreenNotifier2D");
+    if (GameState.NinjaHit && !visibilityNotifier.IsOnScreen())
+    {
+      QueueFree();
+    }
+  }
+
   public void OnAreaEntered(Area2D area)
   {
     var isBlob = area.Name == "BlobArea2D" && !area.GetNode<Blob>("../../../Blob").Hit;
