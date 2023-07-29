@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1enp64ypa4ey"]
+[gd_scene load_steps=5 format=3 uid="uid://c1enp64ypa4ey"]
 
 [ext_resource type="TileSet" uid="uid://bjkqigqwvc6kr" path="res://tilesets/ninja_tileset.tres" id="1_fowad"]
 [ext_resource type="PackedScene" uid="uid://pf6fdjmq6xdj" path="res://scenes/ninja.tscn" id="2_ss3oy"]
 [ext_resource type="PackedScene" uid="uid://lcm5eceehcax" path="res://scenes/redBlob.tscn" id="3_stauc"]
+[ext_resource type="PackedScene" uid="uid://b4lt7y4su3u4o" path="res://scenes/bat.tscn" id="4_bhf8i"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -25,3 +26,6 @@ position = Vector2(222, 318)
 
 [node name="Node2D2" parent="." instance=ExtResource("3_stauc")]
 position = Vector2(416, 497)
+
+[node name="Bat" parent="." instance=ExtResource("4_bhf8i")]
+position = Vector2(611, 439)
