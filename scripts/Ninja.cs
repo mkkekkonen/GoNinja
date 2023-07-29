@@ -37,7 +37,11 @@ public partial class Ninja : Node2D
 
       if (!GameState.NinjaHit)
       {
+        var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
+        sprite.Modulate = new Color(1, 0, 0, 0.5f);
+
         GameState.NinjaHit = true;
+
         Utils.DropCharacterBody2D(characterBody);
       }
     }

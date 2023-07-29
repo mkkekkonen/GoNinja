@@ -56,6 +56,9 @@ public partial class Blob : Node2D
 
       if (!Hit)
       {
+        var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
+        sprite.Modulate = new Color(1, 0, 0, 0.5f);
+
         Hit = true;
         Utils.DropCharacterBody2D(characterBody);
       }

@@ -33,17 +33,6 @@ public partial class Bat : Node2D
     Hit = false;
   }
 
-  public override void _Process(double delta)
-  {
-    base._Process(delta);
-
-    if (Hit)
-    {
-      var sprite = GetNode<Sprite2D>("Sprite2D");
-      sprite.Modulate = new Color(1, 0, 0, 0.5f);
-    }
-  }
-
   public override void _PhysicsProcess(double delta)
   {
     if (Hit)
@@ -74,6 +63,9 @@ public partial class Bat : Node2D
       if (!Hit)
       {
         Hit = true;
+
+        var sprite = GetNode<Sprite2D>("Sprite2D");
+        sprite.Modulate = new Color(1, 0, 0, 0.5f);
       }
     }
   }
