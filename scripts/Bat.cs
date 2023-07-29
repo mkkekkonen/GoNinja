@@ -13,6 +13,9 @@ public partial class Bat : Node2D
   {
     base._Ready();
 
+    var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    animationPlayer.Play("hover");
+
     startPoint = Position;
   }
 
