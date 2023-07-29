@@ -1,17 +1,19 @@
 using Godot;
 using System;
 
-public partial class NinjaArea2D : Area2D
+public partial class BlobArea2D : Area2D
 {
   public void OnAreaEntered(Area2D area)
   {
-    if (area.Name == "BlobArea2D" && !area.GetNode<BlobPhysics>("../../CharacterBody2D").Hit)
+    if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
     {
       var characterBody = GetNode<CharacterBody2D>("../../CharacterBody2D");
+      var blobPhysics = (BlobPhysics)characterBody;
 
-      if (!GameState.NinjaHit)
+      if (!blobPhysics.Hit)
       {
-        GameState.NinjaHit = true;
+        blobPhysics.Hit = true;
+
         Utils.DropCharacterBody2D(characterBody);
       }
     }
