@@ -27,7 +27,7 @@ public partial class BlobPhysics : CharacterBody2D
   {
     base._Ready();
 
-    GameState.BlobsHit.Add(GetInstanceId(), false);
+    Hit = false;
   }
 
   public override void _Process(double delta)
