@@ -3,70 +3,24 @@ using System;
 
 public partial class BlobPhysics : CharacterBody2D
 {
-  public bool Hit
-  {
-    get
-    {
-      return GameState.BlobsHit[GetInstanceId()];
-    }
-    set
-    {
-      GameState.BlobsHit[GetInstanceId()] = value;
-    }
-  }
-
   public const float Speed = 100.0f;
-  public const float JumpVelocity = -400.0f;
 
   public Vector2 Direction = new Vector2(1, 0);
 
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
-  public override void _Ready()
-  {
-    base._Ready();
-
-    Hit = false;
-  }
-
-  public override void _Process(double delta)
-  {
-    base._Process(delta);
-
-    var sprite = GetNode<Sprite2D>("Sprite2D");
-    var animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
-
-    if (Hit)
-    {
-      animationPlayer.Play("idle");
-      return;
-    }
-
-    if (Velocity.X < 0 && !sprite.FlipH)
-    {
-      sprite.FlipH = true;
-    }
-    else if (Velocity.X > 0 && sprite.FlipH)
-    {
-      sprite.FlipH = false;
-    }
-
-    if (Mathf.Abs(Velocity.X) > 0)
-    {
-      animationPlayer.Play("move");
-    }
-  }
-
   public override void _PhysicsProcess(double delta)
   {
+    var blob = GetNode<Blob>("../../Blob");
+
     Vector2 velocity = Velocity;
 
     // Add the gravity.
     if (!IsOnFloor())
       velocity.Y += gravity * (float)delta;
 
-    if (!Hit)
+    if (!blob.Hit)
       HandleDirection();
 
     if (Direction != Vector2.Zero)

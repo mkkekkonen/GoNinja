@@ -7,30 +7,16 @@ public partial class NinjaPhysics : CharacterBody2D
   public const float JumpVelocity = -450.0f;
   public const float Epsilon = 0.1f;
 
-  public bool Attacking { get; set; } = false;
-
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
-  public override void _Input(InputEvent @event)
-  {
-    base._Input(@event);
-
-    var animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
-
-    var text = @event.AsText();
-
-    if (text == "Ctrl" && !Attacking)
-    {
-      animationPlayer.Play("attack");
-      Attacking = true;
-    }
-  }
 
   public override void _Process(double delta)
   {
     base._Process(delta);
 
+    GD.Print(GetParent().Name);
+
+    var ninja = GetNode<Ninja>("../../Ninja");
     var sprite = GetNode<Sprite2D>("Sprite2D");
 
     if (Velocity.X < 0 && !sprite.FlipH)
@@ -45,7 +31,7 @@ public partial class NinjaPhysics : CharacterBody2D
     var animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
     var velocityAbs = Math.Abs(Velocity.X);
 
-    if (Attacking)
+    if (ninja.Attacking)
     {
       // no-op
     }
@@ -65,6 +51,8 @@ public partial class NinjaPhysics : CharacterBody2D
 
   public override void _PhysicsProcess(double delta)
   {
+    var ninja = GetNode<Ninja>("../../Ninja");
+
     var velocity = Velocity;
     var isOnFloor = IsOnFloor();
 
@@ -79,7 +67,7 @@ public partial class NinjaPhysics : CharacterBody2D
     // Get the input direction and handle the movement/deceleration.
     // As good practice, you should replace UI actions with custom gameplay actions.
     Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-    if (!(isOnFloor && Attacking) && direction != Vector2.Zero)
+    if (!(isOnFloor && ninja.Attacking) && direction != Vector2.Zero)
     {
       velocity.X = direction.X * Speed;
     }
@@ -90,10 +78,5 @@ public partial class NinjaPhysics : CharacterBody2D
 
     Velocity = velocity;
     MoveAndSlide();
-  }
-
-  public void EndAttack()
-  {
-    Attacking = false;
   }
 }
