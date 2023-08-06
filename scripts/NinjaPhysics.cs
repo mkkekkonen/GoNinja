@@ -58,20 +58,23 @@ public partial class NinjaPhysics : CharacterBody2D
     if (!IsOnFloor())
       velocity.Y += gravity * (float)delta;
 
-    // Handle Jump.
-    if (Input.IsActionJustPressed("ui_accept") && isOnFloor)
-      velocity.Y = JumpVelocity;
+    if (GameState.CountdownValue == 0)
+    {
+      // Handle Jump.
+      if (Input.IsActionJustPressed("ui_accept") && isOnFloor)
+        velocity.Y = JumpVelocity;
 
-    // Get the input direction and handle the movement/deceleration.
-    // As good practice, you should replace UI actions with custom gameplay actions.
-    Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-    if (!(isOnFloor && ninja.Attacking) && direction != Vector2.Zero)
-    {
-      velocity.X = direction.X * Speed;
-    }
-    else
-    {
-      velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+      // Get the input direction and handle the movement/deceleration.
+      // As good practice, you should replace UI actions with custom gameplay actions.
+      Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+      if (!(isOnFloor && ninja.Attacking) && direction != Vector2.Zero)
+      {
+        velocity.X = direction.X * Speed;
+      }
+      else
+      {
+        velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+      }
     }
 
     Velocity = velocity;
