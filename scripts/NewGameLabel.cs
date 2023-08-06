@@ -14,7 +14,7 @@ public partial class NewGameLabel : Label
 
         if (labelRect.HasPoint(clickPosition))
         {
-          var level1 = (PackedScene)ResourceLoader.Load("res://scenes/testScene.tscn");
+          var level1 = (PackedScene)ResourceLoader.Load("res://scenes/game.tscn");
 
           GetTree().ChangeSceneToPacked(level1);
         }

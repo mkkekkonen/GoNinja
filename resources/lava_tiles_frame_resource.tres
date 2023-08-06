@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5wj6st5o32ge"]
+
+[ext_resource type="Script" path="res://scripts/LavaTileFramesResource.cs" id="1_qlhsu"]
+
+[resource]
+script = ExtResource("1_qlhsu")

@@ -1,0 +1,6 @@
+[gd_resource type="AnimatedTexture" load_steps=2 format=3 uid="uid://c1ju6y47senja"]
+
+[ext_resource type="Script" path="res://scripts/LavaTileAnimatedTexture.cs" id="1_e0jvg"]
+
+[resource]
+script = ExtResource("1_e0jvg")

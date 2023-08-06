@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://vkaj1p23jdn0"]
+
+[ext_resource type="Script" path="res://scripts/LavaTileAnimation.cs" id="1_835u4"]
+
+[node name="LavaAnimatedSprite2D" type="AnimatedSprite2D"]
+position = Vector2(108, 102)
+scale = Vector2(6, 6)
+script = ExtResource("1_835u4")
