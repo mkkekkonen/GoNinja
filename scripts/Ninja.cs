@@ -17,9 +17,9 @@ public partial class Ninja : Node2D
 
     var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-    var text = @event.AsText();
+    var eventText = @event.AsText();
 
-    if (text == "Ctrl" && !Attacking)
+    if (eventText == "Ctrl" && !Attacking)
     {
       animationPlayer.Play("attack");
       Attacking = true;
@@ -44,22 +44,27 @@ public partial class Ninja : Node2D
 
     if (isBlob || isBat)
     {
-      var characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
-
-      if (!GameState.NinjaHit)
-      {
-        var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
-        sprite.Modulate = new Color(1, 0, 0, 0.5f);
-
-        GameState.NinjaHit = true;
-
-        Utils.DropCharacterBody2D(characterBody);
-      }
+      HandleHitByEnemy();
     }
   }
 
   public void EndAttack()
   {
     Attacking = false;
+  }
+
+  private void HandleHitByEnemy()
+  {
+    var characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
+
+    if (!GameState.NinjaHit)
+    {
+      var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
+      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+
+      GameState.NinjaHit = true;
+
+      Utils.DropCharacterBody2D(characterBody);
+    }
   }
 }

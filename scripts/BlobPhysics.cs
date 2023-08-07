@@ -5,7 +5,7 @@ public partial class BlobPhysics : CharacterBody2D
 {
   public const float Speed = 100.0f;
 
-  public Vector2 Direction = new Vector2(1, 0);
+  public Vector2 Direction = new(1, 0);
 
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();

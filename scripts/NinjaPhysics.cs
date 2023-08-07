@@ -3,6 +3,8 @@ using System;
 
 public partial class NinjaPhysics : CharacterBody2D
 {
+  private Ninja ninja;
+
   public const float Speed = 300.0f;
   public const float JumpVelocity = -450.0f;
   public const float Epsilon = 0.1f;
@@ -10,11 +12,35 @@ public partial class NinjaPhysics : CharacterBody2D
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+  public override void _Ready()
+  {
+    ninja = GetNode<Ninja>("../../Ninja");
+  }
+
   public override void _Process(double delta)
   {
-    base._Process(delta);
+    HandleSpriteFlip();
+    HandleAnimation();
+  }
 
-    var ninja = GetNode<Ninja>("../../Ninja");
+  public override void _PhysicsProcess(double delta)
+  {
+    var velocity = Velocity;
+
+    velocity = Fall(delta, velocity);
+
+    if (GameState.CountdownValue == 0)
+    {
+      velocity = HandleJump(velocity);
+      velocity = HandleMove(velocity);
+    }
+
+    Velocity = velocity;
+    MoveAndSlide();
+  }
+
+  private void HandleSpriteFlip()
+  {
     var sprite = GetNode<Sprite2D>("Sprite2D");
 
     if (Velocity.X < 0 && !sprite.FlipH)
@@ -25,7 +51,10 @@ public partial class NinjaPhysics : CharacterBody2D
     {
       sprite.FlipH = false;
     }
+  }
 
+  private void HandleAnimation()
+  {
     var animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
     var velocityAbs = Math.Abs(Velocity.X);
 
@@ -47,37 +76,34 @@ public partial class NinjaPhysics : CharacterBody2D
     }
   }
 
-  public override void _PhysicsProcess(double delta)
+  private Vector2 Fall(double delta, Vector2 velocity)
   {
-    var ninja = GetNode<Ninja>("../../Ninja");
-
-    var velocity = Velocity;
-    var isOnFloor = IsOnFloor();
-
-    // Add the gravity.
     if (!IsOnFloor())
       velocity.Y += gravity * (float)delta;
 
-    if (GameState.CountdownValue == 0)
-    {
-      // Handle Jump.
-      if (Input.IsActionJustPressed("ui_accept") && isOnFloor)
-        velocity.Y = JumpVelocity;
+    return velocity;
+  }
 
-      // Get the input direction and handle the movement/deceleration.
-      // As good practice, you should replace UI actions with custom gameplay actions.
-      Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-      if (!(isOnFloor && ninja.Attacking) && direction != Vector2.Zero)
-      {
-        velocity.X = direction.X * Speed;
-      }
-      else
-      {
-        velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-      }
+  private Vector2 HandleJump(Vector2 velocity)
+  {
+    if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+      velocity.Y = JumpVelocity;
+
+    return velocity;
+  }
+
+  private Vector2 HandleMove(Vector2 velocity)
+  {
+    Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+    if (!(IsOnFloor() && ninja.Attacking) && direction != Vector2.Zero)
+    {
+      velocity.X = direction.X * Speed;
+    }
+    else
+    {
+      velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
     }
 
-    Velocity = velocity;
-    MoveAndSlide();
+    return velocity;
   }
 }

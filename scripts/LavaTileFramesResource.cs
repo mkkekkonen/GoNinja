@@ -27,15 +27,20 @@ public partial class LavaTileFramesResource : Resource
 
     if (sheetTexture != null)
     {
-      spriteSheetImage = sheetTexture.GetImage();
+      InitTextures(sheetTexture);
+    }
+  }
 
-      Textures = new Texture2D[FRAMES_COUNT];
+  private void InitTextures(Texture2D sheetTexture)
+  {
+    spriteSheetImage = sheetTexture.GetImage();
 
-      for (var i = 0; i < FRAMES_COUNT; i++)
-      {
-        (var x, var y) = _coords[i];
-        Textures[i] = ExtractTexture(x, y);
-      }
+    Textures = new Texture2D[FRAMES_COUNT];
+
+    for (var i = 0; i < FRAMES_COUNT; i++)
+    {
+      (var x, var y) = _coords[i];
+      Textures[i] = ExtractTexture(x, y);
     }
   }
 

@@ -9,20 +9,25 @@ public partial class NewGameLabel : Label
     {
       if (e is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
       {
-        var clickPosition = mouseEvent.GlobalPosition;
-        var labelRect = GetGlobalRect();
-
-        if (labelRect.HasPoint(clickPosition))
-        {
-          var level1 = (PackedScene)ResourceLoader.Load("res://scenes/game.tscn");
-
-          GetTree().ChangeSceneToPacked(level1);
-        }
+        HandleClick(mouseEvent);
       }
     }
     catch (Exception ex)
     {
       GD.Print(ex.Message);
+    }
+  }
+
+  private void HandleClick(InputEventMouseButton mouseEvent)
+  {
+    var clickPosition = mouseEvent.GlobalPosition;
+    var labelRect = GetGlobalRect();
+
+    if (labelRect.HasPoint(clickPosition))
+    {
+      var level1 = (PackedScene)ResourceLoader.Load("res://scenes/game.tscn");
+
+      GetTree().ChangeSceneToPacked(level1);
     }
   }
 }

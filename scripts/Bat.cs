@@ -37,30 +37,11 @@ public partial class Bat : Node2D
   {
     if (Hit)
     {
-      var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
-      if (Hit && !visibilityNotifier.IsOnScreen())
-      {
-        GameState.BatsHit.Remove(GetInstanceId());
-        QueueFree();
-      }
-
-      velocity += new Vector2(0, (float)(9.81f * delta * 10));
-
-      Position += (velocity * new Vector2(0, (float)delta));
-
+      HandleHit(delta);
       return;
     }
 
-    var offsetMultiplier = Mathf.Sin(angle) + 1; // add 1 to make the multiplier positive
-                                                 // (sine function value is between -1 and 1)
-    offsetMultiplier = offsetMultiplier / 2; // normalize the multiplier to be between 0 and 1
-    offsetMultiplier = (float)(offsetMultiplier * (delta * 100));
-
-    var newOffset = offsetMultiplier * MaxDistance;
-
-    Position = (startPoint + new Vector2(0, newOffset));
-
-    angle += (float)(AngularVelocity * delta);
+    Hover(delta);
   }
 
   public void OnAreaEntered(Area2D area)
@@ -75,5 +56,47 @@ public partial class Bat : Node2D
         sprite.Modulate = new Color(1, 0, 0, 0.5f);
       }
     }
+  }
+
+  private void HandleHit(double delta)
+  {
+    if (TryToDestroy())
+      return;
+
+    Fall(delta);
+  }
+
+  private bool TryToDestroy()
+  {
+    var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
+    if (!visibilityNotifier.IsOnScreen())
+    {
+      GameState.BatsHit.Remove(GetInstanceId());
+      QueueFree();
+      return true;
+    }
+
+    return false;
+  }
+
+  private void Fall(double delta)
+  {
+    velocity += new Vector2(0, (float)(9.81f * delta * 10));
+
+    Position += velocity * new Vector2(0, (float)delta);
+  }
+
+  private void Hover(double delta)
+  {
+    var offsetMultiplier = Mathf.Sin(angle) + 1; // add 1 to make the multiplier positive
+                                                 // (sine function value is between -1 and 1)
+    offsetMultiplier = offsetMultiplier / 2; // normalize the multiplier to be between 0 and 1
+    offsetMultiplier = (float)(offsetMultiplier * (delta * 100));
+
+    var newOffset = offsetMultiplier * MaxDistance;
+
+    Position = startPoint + new Vector2(0, newOffset);
+
+    angle += (float)(AngularVelocity * delta);
   }
 }

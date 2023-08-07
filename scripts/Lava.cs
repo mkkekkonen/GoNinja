@@ -7,13 +7,12 @@ public partial class Lava : Node2D
   private readonly int Y_COORDINATE = 475;
   private readonly int FRAMES_COUNT = 8;
 
-  private List<Node2D> _sprites = new();
+  private readonly List<Node2D> _sprites = new();
 
   // Called when the node enters the scene tree for the first time.
   public override void _Ready()
   {
     var window = GetWindow();
-    var tileOffset = SPRITE_DIMENSIONS / 2;
 
     var lavaSprite = GD.Load<PackedScene>("res://scenes/lavaAnimatedSprite.tscn");
 

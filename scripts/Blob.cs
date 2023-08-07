@@ -3,6 +3,10 @@ using System;
 
 public partial class Blob : Node2D
 {
+  private CharacterBody2D characterBody;
+  private Sprite2D sprite;
+  private AnimationPlayer animationPlayer;
+
   public bool Hit
   {
     get
@@ -18,34 +22,22 @@ public partial class Blob : Node2D
   public override void _Ready()
   {
     Hit = false;
+
+    characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
+    sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
+    animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
   }
 
   // Called every frame. 'delta' is the elapsed time since the previous frame.
   public override void _Process(double delta)
   {
-    var characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
-    var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
-    var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-
-    if (Hit)
+    if (StopAnimationIfHit())
     {
-      animationPlayer.Play("idle");
       return;
     }
 
-    if (characterBody.Velocity.X < 0 && !sprite.FlipH)
-    {
-      sprite.FlipH = true;
-    }
-    else if (characterBody.Velocity.X > 0 && sprite.FlipH)
-    {
-      sprite.FlipH = false;
-    }
-
-    if (Mathf.Abs(characterBody.Velocity.X) > 0)
-    {
-      animationPlayer.Play("move");
-    }
+    HandleSpriteFlip();
+    HandleAnimation();
   }
 
   public override void _PhysicsProcess(double delta)
@@ -64,16 +56,49 @@ public partial class Blob : Node2D
   {
     if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
     {
-      var characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
+      HandleHit();
+    }
+  }
 
-      if (!Hit)
-      {
-        var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
-        sprite.Modulate = new Color(1, 0, 0, 0.5f);
+  private bool StopAnimationIfHit()
+  {
+    if (Hit)
+    {
+      animationPlayer.Play("idle");
+      return true;
+    }
 
-        Hit = true;
-        Utils.DropCharacterBody2D(characterBody);
-      }
+    return false;
+  }
+
+  private void HandleSpriteFlip()
+  {
+    if (characterBody.Velocity.X < 0 && !sprite.FlipH)
+    {
+      sprite.FlipH = true;
+    }
+    else if (characterBody.Velocity.X > 0 && sprite.FlipH)
+    {
+      sprite.FlipH = false;
+    }
+  }
+
+  private void HandleAnimation()
+  {
+    if (Mathf.Abs(characterBody.Velocity.X) > 0)
+    {
+      animationPlayer.Play("move");
+    }
+  }
+
+  private void HandleHit()
+  {
+    if (!Hit)
+    {
+      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+
+      Hit = true;
+      Utils.DropCharacterBody2D(characterBody);
     }
   }
 }
