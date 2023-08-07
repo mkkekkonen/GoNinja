@@ -88,9 +88,11 @@ public partial class Bat : Node2D
 
   private void Hover(double delta)
   {
-    var offsetMultiplier = Mathf.Sin(angle) + 1; // add 1 to make the multiplier positive
-                                                 // (sine function value is between -1 and 1)
-    offsetMultiplier = offsetMultiplier / 2; // normalize the multiplier to be between 0 and 1
+    // add 1 to make the multiplier positive
+    // (sine function value is between -1 and 1)
+    var offsetMultiplier = Mathf.Sin(angle) + 1;
+
+    offsetMultiplier /= 2; // normalize the multiplier to be between 0 and 1
     offsetMultiplier = (float)(offsetMultiplier * (delta * 100));
 
     var newOffset = offsetMultiplier * MaxDistance;

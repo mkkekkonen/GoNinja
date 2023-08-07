@@ -16,23 +16,18 @@ public partial class BlobPhysics : CharacterBody2D
 
     Vector2 velocity = Velocity;
 
-    // Add the gravity.
-    if (!IsOnFloor())
-      velocity.Y += gravity * (float)delta;
+    velocity = Fall(velocity, delta);
 
     if (!blob.Hit)
       HandleDirection();
 
-    if (Direction != Vector2.Zero)
+    if (GameState.CountdownValue == 0)
     {
-      velocity.X = Direction.X * Speed;
-    }
-    else
-    {
-      velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+      velocity = HandleMove(velocity);
     }
 
     Velocity = velocity;
+
     MoveAndSlide();
   }
 
@@ -50,5 +45,27 @@ public partial class BlobPhysics : CharacterBody2D
     {
       Direction = direction * new Vector2(-1, 0);
     }
+  }
+
+  private Vector2 Fall(Vector2 velocity, double delta)
+  {
+    if (!IsOnFloor())
+      velocity.Y += gravity * (float)delta;
+
+    return velocity;
+  }
+
+  private Vector2 HandleMove(Vector2 velocity)
+  {
+    if (Direction != Vector2.Zero)
+    {
+      velocity.X = Direction.X * Speed;
+    }
+    else
+    {
+      velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+    }
+
+    return velocity;
   }
 }
