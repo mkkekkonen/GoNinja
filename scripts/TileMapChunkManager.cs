@@ -3,8 +3,7 @@ using System;
 
 public partial class TileMapChunkManager : Node2D
 {
-
-	private readonly int CHUNK_SIZE = 50;
+	private readonly int CHUNK_SIZE = 24;
 
 	private TileMap tileMap;
 	private CharacterBody2D playerCharacterBody;
@@ -14,12 +13,15 @@ public partial class TileMapChunkManager : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		World.Instance.GeneratePlatforms();
+
 		tileMap = GetNode<TileMap>("../TileMap");
 		playerCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
 
 		lastChunkPosition = GetPlayerChunkPosition();
 
 		LoadChunks();
+		GeneratePlatforms();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,6 +67,23 @@ public partial class TileMapChunkManager : Node2D
 					new Vector2I(chunkX * CHUNK_SIZE + x, chunkY * CHUNK_SIZE + y),
 					0,
 					new Vector2I(0, 0),
+					0
+				);
+			}
+		}
+	}
+
+	private void GeneratePlatforms()
+	{
+		foreach (var platform in World.Instance.Platforms)
+		{
+			foreach (var coordinates in platform.Coordinates)
+			{
+				tileMap.SetCell(
+					1,
+					coordinates,
+					0,
+					new Vector2I(3, 1),
 					0
 				);
 			}
