@@ -21,7 +21,7 @@ public partial class TileMapChunkManager : Node2D
 		lastChunkPosition = GetPlayerChunkPosition();
 
 		LoadChunks();
-		GeneratePlatforms();
+		PlatformRenderer.Instance.RenderPlatforms(tileMap);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,23 +67,6 @@ public partial class TileMapChunkManager : Node2D
 					new Vector2I(chunkX * CHUNK_SIZE + x, chunkY * CHUNK_SIZE + y),
 					0,
 					new Vector2I(0, 0),
-					0
-				);
-			}
-		}
-	}
-
-	private void GeneratePlatforms()
-	{
-		foreach (var platform in World.Instance.Platforms)
-		{
-			foreach (var coordinates in platform.Coordinates)
-			{
-				tileMap.SetCell(
-					1,
-					coordinates,
-					0,
-					new Vector2I(3, 1),
 					0
 				);
 			}

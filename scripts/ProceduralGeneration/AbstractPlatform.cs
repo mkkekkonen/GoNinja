@@ -3,12 +3,12 @@ using Godot;
 
 public abstract class AbstractPlatform
 {
-  protected static string label;
+  protected string label;
   protected List<Vector2I> coordinates;
 
   public Vector2I TopLeft { get; set; }
   public int Width { get; set; }
-  public static string Label
+  public string Label
   {
     get
     {
