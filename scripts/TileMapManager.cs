@@ -11,8 +11,9 @@ public partial class TileMapManager : Node2D
 		tileMap = GetNode<TileMap>("../TileMap");
 
 		World.Instance.GeneratePlatforms();
-		PlatformRenderer.Instance.RenderBackground(tileMap);
-		PlatformRenderer.Instance.RenderPlatforms(tileMap);
+		WorldRenderer.Instance.RenderBackground(tileMap);
+		WorldRenderer.Instance.RenderPlatforms(tileMap);
+		WorldRenderer.Instance.RenderLava(tileMap);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

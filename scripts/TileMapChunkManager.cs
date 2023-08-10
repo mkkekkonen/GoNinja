@@ -21,7 +21,7 @@ public partial class TileMapChunkManager : Node2D
 		lastChunkPosition = GetPlayerChunkPosition();
 
 		LoadChunks();
-		PlatformRenderer.Instance.RenderPlatforms(tileMap);
+		WorldRenderer.Instance.RenderPlatforms(tileMap);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

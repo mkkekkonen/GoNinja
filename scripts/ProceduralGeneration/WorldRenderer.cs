@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-public class PlatformRenderer
+public class WorldRenderer
 {
   private readonly int WORLD_BOTTOM_Y = 18;
   private readonly int BG_LAYER_INDEX = 0;
@@ -23,17 +23,32 @@ public class PlatformRenderer
 
   private readonly Vector2I BG_TILE = new(0, 0);
   private readonly Vector2I GEMS_TILE = new(1, 0);
+  private readonly Vector2I LAVA_TILE = new(1, 5);
 
-  private static PlatformRenderer instance;
+  private readonly int renderStartX;
+  private readonly int renderStartY;
+  private readonly int renderEndX;
+  private readonly int renderEndY;
+
+  private static WorldRenderer instance;
   private Random random = new();
 
-  private PlatformRenderer() { }
+  private WorldRenderer()
+  {
+    var worldWidthHalved = WORLD_WIDTH / 2;
+    var worldHeightHalved = WORLD_HEIGHT / 2;
 
-  public static PlatformRenderer Instance
+    renderStartX = 0 - worldWidthHalved;
+    renderStartY = World.Instance.GetHighestPlatformYCoordinate() - worldHeightHalved;
+    renderEndX = World.Instance.GetFarthestPlatformEndXCoordinate() + worldWidthHalved;
+    renderEndY = WORLD_BOTTOM_Y + worldHeightHalved;
+  }
+
+  public static WorldRenderer Instance
   {
     get
     {
-      instance ??= new PlatformRenderer();
+      instance ??= new WorldRenderer();
       return instance;
     }
   }
@@ -62,17 +77,10 @@ public class PlatformRenderer
 
   public void RenderBackground(TileMap tileMap)
   {
-    var worldWidthHalved = WORLD_WIDTH / 2;
-    var worldHeightHalved = WORLD_HEIGHT / 2;
 
-    var startX = 0 - worldWidthHalved;
-    var startY = World.Instance.GetHighestPlatformYCoordinate() - worldHeightHalved;
-    var endX = World.Instance.GetFarthestPlatformEndXCoordinate() + worldWidthHalved;
-    var endY = WORLD_BOTTOM_Y + worldHeightHalved;
-
-    for (var x = startX; x < endX; x++)
+    for (var x = renderStartX; x < renderEndX; x++)
     {
-      for (var y = startY; y < endY; y++)
+      for (var y = renderStartY; y < renderEndY; y++)
       {
         var tileAtlasCoords = random.Next(0, 75) == 1
           ? GEMS_TILE
@@ -83,6 +91,26 @@ public class PlatformRenderer
           new Vector2I(x, y),
           0,
           tileAtlasCoords,
+          0
+        );
+      }
+    }
+  }
+
+  public void RenderLava(TileMap tileMap)
+  {
+    var startY = 17;
+    var endY = 22;
+
+    for (var x = renderStartX; x < renderEndX; x++)
+    {
+      for (var y = startY; y < endY; y++)
+      {
+        tileMap.SetCell(
+          FG_LAYER_INDEX,
+          new Vector2I(x, y),
+          0,
+          LAVA_TILE,
           0
         );
       }

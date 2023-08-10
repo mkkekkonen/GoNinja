@@ -97,8 +97,8 @@ public class World
 
   private void IncrementNewPlatformTopLeft(AbstractPlatform platform)
   {
-    var gap = random.Next(1, 3);
-    var yDiff = random.Next(-2, 2);
+    var gap = random.Next(2, 4);
+    var yDiff = random.Next(-3, 3);
 
     var topLeftIncrement = new Vector2I(
       platform.Width + gap,
