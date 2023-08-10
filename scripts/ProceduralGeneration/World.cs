@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public class World
@@ -18,6 +19,7 @@ public class World
   private readonly int N_PLATFORMS = 75;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
+  private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
 
   private readonly string[] platformLabels = new string[] { "platform", "pillar" };
 
@@ -45,6 +47,23 @@ public class World
       platforms.Add(platform);
       IncrementNewPlatformTopLeft(platform);
     }
+  }
+
+  public int GetHighestPlatformYCoordinate()
+  {
+    var yCoordinate = platforms.First().TopLeft.Y;
+
+    foreach (var platform in platforms)
+    {
+      yCoordinate = Math.Min(yCoordinate, platform.TopLeft.Y);
+    }
+
+    return yCoordinate;
+  }
+
+  public int GetFarthestPlatformEndXCoordinate()
+  {
+    return platforms.Last().Coordinates.Last().X;
   }
 
   private int GetNewPlatformWidth()
@@ -87,5 +106,7 @@ public class World
     );
 
     newPlatformTopLeft += topLeftIncrement;
+
+    newPlatformTopLeft.Y = Math.Min(newPlatformTopLeft.Y, MAX_PLATFORM_Y_COORDINATE);
   }
 }

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://urgx1jypu1ad" path="res://scenes/countdown.tscn" id="4_08esm"]
 [ext_resource type="PackedScene" uid="uid://b4lt7y4su3u4o" path="res://scenes/bat.tscn" id="6_h2j3h"]
 [ext_resource type="PackedScene" uid="uid://lcm5eceehcax" path="res://scenes/redBlob.tscn" id="6_iqe3s"]
-[ext_resource type="PackedScene" uid="uid://77m2yk4vyo1g" path="res://scenes/tile_map_chunk_manager.tscn" id="8_r8etw"]
+[ext_resource type="PackedScene" uid="uid://cxmy5iwkqa6xa" path="res://scenes/tile_map_manager.tscn" id="8_grktr"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lqlek")
@@ -38,4 +38,4 @@ position = Vector2(143, 477)
 
 [node name="Countdown" parent="." instance=ExtResource("4_08esm")]
 
-[node name="TileMapChunkManager" parent="." instance=ExtResource("8_r8etw")]
+[node name="TileMapManager" parent="." instance=ExtResource("8_grktr")]
