@@ -13,7 +13,7 @@ public partial class TileMapChunkManager : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		World.Instance.GeneratePlatforms();
+		GameWorld.Instance.GeneratePlatforms();
 
 		tileMap = GetNode<TileMap>("../TileMap");
 		playerCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
@@ -21,7 +21,7 @@ public partial class TileMapChunkManager : Node2D
 		lastChunkPosition = GetPlayerChunkPosition();
 
 		LoadChunks();
-		WorldRenderer.Instance.RenderPlatforms(tileMap);
+		GameWorldRenderer.Instance.RenderPlatforms(tileMap);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

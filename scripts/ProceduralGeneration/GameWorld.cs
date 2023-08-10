@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public class World
+public class GameWorld
 {
-  private static World instance;
+  private static GameWorld instance;
 
-  public static World Instance
+  public static GameWorld Instance
   {
     get
     {
-      instance ??= new World();
+      instance ??= new GameWorld();
       return instance;
     }
   }
@@ -29,7 +29,7 @@ public class World
 
   private readonly Random random = new();
 
-  private World() { }
+  private GameWorld() { }
 
   public List<AbstractPlatform> Platforms
   {

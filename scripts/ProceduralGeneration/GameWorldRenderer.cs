@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 
-public class WorldRenderer
+public class GameWorldRenderer
 {
   private readonly int WORLD_BOTTOM_Y = 18;
   private readonly int BG_LAYER_INDEX = 0;
@@ -30,32 +30,32 @@ public class WorldRenderer
   private readonly int renderEndX;
   private readonly int renderEndY;
 
-  private static WorldRenderer instance;
+  private static GameWorldRenderer instance;
   private Random random = new();
 
-  private WorldRenderer()
+  private GameWorldRenderer()
   {
     var worldWidthHalved = WORLD_WIDTH / 2;
     var worldHeightHalved = WORLD_HEIGHT / 2;
 
     renderStartX = 0 - worldWidthHalved;
-    renderStartY = World.Instance.GetHighestPlatformYCoordinate() - worldHeightHalved;
-    renderEndX = World.Instance.GetFarthestPlatformEndXCoordinate() + worldWidthHalved;
+    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - worldHeightHalved;
+    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + worldWidthHalved;
     renderEndY = WORLD_BOTTOM_Y + worldHeightHalved;
   }
 
-  public static WorldRenderer Instance
+  public static GameWorldRenderer Instance
   {
     get
     {
-      instance ??= new WorldRenderer();
+      instance ??= new GameWorldRenderer();
       return instance;
     }
   }
 
   public void RenderPlatforms(TileMap tileMap)
   {
-    foreach (var platform in World.Instance.Platforms)
+    foreach (var platform in GameWorld.Instance.Platforms)
     {
       foreach (var coordinates in platform.Coordinates)
       {
