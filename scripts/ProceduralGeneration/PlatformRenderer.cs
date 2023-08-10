@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 
 public class PlatformRenderer
@@ -13,8 +14,8 @@ public class PlatformRenderer
   private readonly Vector2I PILLAR_TOP = new(3, 0);
   private readonly Vector2I PILLAR_TOP_RIGHT = new(4, 0);
   private readonly Vector2I PILLAR_LEFT = new(2, 1);
-  private readonly Vector2I PILLAR_CENTER = new(2, 1);
-  private readonly Vector2I PILLAR_RIGHT = new(3, 1);
+  private readonly Vector2I PILLAR_CENTER = new(3, 1);
+  private readonly Vector2I PILLAR_RIGHT = new(4, 1);
 
   private readonly Vector2I PLATFORM_LEFT = new(2, 3);
   private readonly Vector2I PLATFORM_MIDDLE = new(3, 3);
@@ -50,6 +51,11 @@ public class PlatformRenderer
           GetTileType(platform, coordinates),
           0
         );
+      }
+
+      if (platform.Label == "pillar")
+      {
+        RenderPillarBase(platform, tileMap);
       }
     }
   }
@@ -114,5 +120,38 @@ public class PlatformRenderer
     }
 
     return PILLAR_CENTER;
+  }
+
+  private void RenderPillarBase(AbstractPlatform pillar, TileMap tileMap)
+  {
+    var startX = pillar.TopLeft.X;
+    var startY = pillar.TopLeft.Y + 1;
+    var endX = pillar.Coordinates.Last().X;
+    var endY = WORLD_BOTTOM_Y;
+
+    for (var x = startX; x <= endX; x++)
+    {
+      for (var y = startY; y <= endY; y++)
+      {
+        Vector2I atlasCoords = PILLAR_CENTER;
+
+        if (x == startX)
+        {
+          atlasCoords = PILLAR_LEFT;
+        }
+        else if (x == endX)
+        {
+          atlasCoords = PILLAR_RIGHT;
+        }
+
+        tileMap.SetCell(
+          FG_LAYER_INDEX,
+          new Vector2I(x, y),
+          0,
+          atlasCoords,
+          0
+        );
+      }
+    }
   }
 }
