@@ -20,14 +20,13 @@ public partial class MovingCamera : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (moving)
+		if (moving && !GameState.GameOver)
 		{
 			var ninjaCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
 
 			var newPosition = GlobalPosition;
 
 			newPosition += velocity * (float)delta;
-
 			newPosition.Y = Math.Min(ninjaCharacterBody.GlobalPosition.Y, maxY);
 
 			GlobalPosition = newPosition;

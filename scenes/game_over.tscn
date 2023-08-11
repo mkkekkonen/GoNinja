@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxg0hpe2a6s7v"]
+
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_narem"]
+[ext_resource type="Script" path="res://scripts/GameOver.cs" id="1_towm8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v47p5"]
+font = ExtResource("1_narem")
+font_size = 60
+
+[node name="GameOver" type="Node2D"]
+visible = false
+script = ExtResource("1_towm8")
+
+[node name="OverlayColorRect" type="ColorRect" parent="."]
+offset_left = -450.0
+offset_top = -250.0
+offset_right = 450.0
+offset_bottom = 250.0
+color = Color(1, 1, 1, 0.290196)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -148.0
+offset_top = -45.0
+offset_right = 140.0
+offset_bottom = 58.0
+text = "Game over"
+label_settings = SubResource("LabelSettings_v47p5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="GoToMenu"]

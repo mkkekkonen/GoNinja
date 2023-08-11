@@ -17,7 +17,7 @@ public partial class Countdown : Node2D
 		overlay = GetNode<ColorRect>("OverlayColorRect");
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		var window = GetWindow();
 

@@ -28,11 +28,12 @@ public partial class Ninja : Node2D
 
   public override void _PhysicsProcess(double delta)
   {
-    base._PhysicsProcess(delta);
-
     var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("CharacterBody2D/VisibleOnScreenNotifier2D");
-    if (GameState.NinjaHit && !visibilityNotifier.IsOnScreen())
+    var gameOver = GetNode<GameOver>("../GameOver");
+
+    if (GameState.CountdownValue == 0 && !visibilityNotifier.IsOnScreen())
     {
+      gameOver.ShowGameOver();
       QueueFree();
     }
   }
