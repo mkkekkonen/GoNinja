@@ -7,6 +7,7 @@ public class GameWorldRenderer
   private readonly int WORLD_BOTTOM_Y = 18;
   private readonly int BG_LAYER_INDEX = 0;
   private readonly int FG_LAYER_INDEX = 1;
+  private readonly int LAVA_LAYER_INDEX = 2;
   private readonly int WORLD_WIDTH = 24;
   private readonly int WORLD_HEIGHT = 14;
 
@@ -107,7 +108,7 @@ public class GameWorldRenderer
       for (var y = startY; y < endY; y++)
       {
         tileMap.SetCell(
-          FG_LAYER_INDEX,
+          LAVA_LAYER_INDEX,
           new Vector2I(x, y),
           0,
           LAVA_TILE,

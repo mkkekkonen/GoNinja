@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public partial class Lava : Node2D
 {
   private readonly int SPRITE_DIMENSIONS = 48;
-  private readonly int Y_COORDINATE = 475;
+  private readonly int Y_COORDINATE = 800;
   private readonly int FRAMES_COUNT = 8;
 
   private readonly List<Node2D> _sprites = new();
@@ -37,12 +37,11 @@ public partial class Lava : Node2D
   // Called every frame. 'delta' is the elapsed time since the previous frame.
   public override void _PhysicsProcess(double delta)
   {
-    var player = GetParent() as Ninja;
-    var playerCharacterBody = player.GetNode<CharacterBody2D>("CharacterBody2D");
+    var camera = GetParent() as MovingCamera;
 
-    if (playerCharacterBody != null)
-    {
-      Position = new Vector2(playerCharacterBody.Position.X, Y_COORDINATE);
-    }
+    var position = camera.GlobalPosition;
+    position.Y = Y_COORDINATE;
+
+    GlobalPosition = position;
   }
 }

@@ -197,7 +197,7 @@ height = 62.0
 size = Vector2(48, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lc6km"]
-size = Vector2(24, 47)
+size = Vector2(38, 60)
 
 [node name="Ninja" type="Node2D"]
 script = ExtResource("1_kinsl")
@@ -237,7 +237,5 @@ collision_mask = 2
 
 [node name="SwordCollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/SwordArea2D"]
 shape = SubResource("RectangleShape2D_lc6km")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="OnAreaEntered"]

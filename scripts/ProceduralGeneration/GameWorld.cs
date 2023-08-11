@@ -19,6 +19,7 @@ public class GameWorld
   private readonly int N_PLATFORMS = 75;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
+  private readonly int MIN_PLATFORM_Y_COORDINATE = 2;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
 
   private readonly string[] platformLabels = new string[] { "platform", "pillar" };
@@ -98,7 +99,7 @@ public class GameWorld
   private void IncrementNewPlatformTopLeft(AbstractPlatform platform)
   {
     var gap = random.Next(2, 4);
-    var yDiff = random.Next(-3, 3);
+    var yDiff = random.Next(-2, 3);
 
     var topLeftIncrement = new Vector2I(
       platform.Width + gap,
