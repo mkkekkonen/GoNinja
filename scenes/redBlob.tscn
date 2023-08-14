@@ -92,4 +92,4 @@ shape = SubResource("CapsuleShape2D_owh2w")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D"]
 
-[connection signal="area_entered" from="CharacterBody2D/BlobArea2D" to="." method="OnAreaEntered"]
+[connection signal="area_entered" from="CharacterBody2D/BlobArea2D" to="." method="HitBySword"]

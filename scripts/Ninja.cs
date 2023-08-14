@@ -40,8 +40,8 @@ public partial class Ninja : Node2D
 
   public void OnAreaEntered(Area2D area)
   {
-    var isBlob = area.Name == "BlobArea2D" && !area.GetNode<Blob>("../../../Blob").Hit;
-    var isBat = area.Name == "BatArea2D" && !area.GetNode<Bat>("../../Bat").Hit;
+    var isBlob = IsAreaBlob(area);
+    var isBat = IsAreaBat(area);
 
     if (isBlob || isBat)
     {
@@ -67,5 +67,35 @@ public partial class Ninja : Node2D
 
       Utils.DropCharacterBody2D(characterBody);
     }
+  }
+
+  private bool IsAreaBlob(Area2D area)
+  {
+    try
+    {
+      if (area.Name == "BlobArea2D")
+      {
+        var blob = area.GetParent().GetParent<Blob>();
+        return blob != null ? !blob.Hit : false;
+      }
+    }
+    catch { }
+
+    return false;
+  }
+
+  private bool IsAreaBat(Area2D area)
+  {
+    try
+    {
+      if (area.Name == "BatArea2D")
+      {
+        var bat = area.GetParent<Bat>();
+        return bat != null ? !bat.Hit : false;
+      }
+    }
+    catch { }
+
+    return false;
   }
 }

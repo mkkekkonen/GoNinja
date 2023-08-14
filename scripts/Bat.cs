@@ -1,9 +1,10 @@
 using Godot;
 using System;
 
-public partial class Bat : Node2D
+public partial class Bat : Node2D, IEnemy
 {
   private float angle = 0;
+  private Guid guid;
   private Vector2 startPoint;
   private Vector2 velocity = new();
 
@@ -14,19 +15,20 @@ public partial class Bat : Node2D
   {
     get
     {
-      return GameState.BatsHit[GetInstanceId()];
+      return GameState.BatsHit[guid.ToString()];
     }
     set
     {
-      GameState.BatsHit[GetInstanceId()] = value;
+      GameState.BatsHit[guid.ToString()] = value;
     }
   }
 
   public override void _Ready()
   {
-    base._Ready();
+    guid = Guid.NewGuid();
 
     var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
     animationPlayer.Play("hover");
 
     startPoint = Position;
@@ -35,48 +37,47 @@ public partial class Bat : Node2D
 
   public override void _PhysicsProcess(double delta)
   {
+    var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
+    if (Hit && !visibilityNotifier.IsOnScreen())
+    {
+      QueueFree();
+      return;
+    }
+
     if (Hit)
     {
-      HandleHit(delta);
+      Fall(delta);
       return;
     }
 
     Hover(delta);
   }
 
-  public void OnAreaEntered(Area2D area)
+  public void HitBySword(Area2D area)
   {
     if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
     {
       if (!Hit)
       {
-        Hit = true;
-
-        var sprite = GetNode<Sprite2D>("Sprite2D");
-        sprite.Modulate = new Color(1, 0, 0, 0.5f);
+        GetParent().EmitSignal("EnemyAreaEntered", guid.ToString());
       }
     }
   }
 
-  private void HandleHit(double delta)
+  public void Destroy()
   {
-    if (TryToDestroy())
-      return;
+    if (!Hit)
+    {
+      var sprite = GetNode<Sprite2D>("Sprite2D");
+      sprite.Modulate = new Color(1, 0, 0, 0.5f);
 
-    Fall(delta);
+      Hit = true;
+    }
   }
 
-  private bool TryToDestroy()
+  public string GetGuid()
   {
-    var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
-    if (!visibilityNotifier.IsOnScreen())
-    {
-      GameState.BatsHit.Remove(GetInstanceId());
-      QueueFree();
-      return true;
-    }
-
-    return false;
+    return guid.ToString();
   }
 
   private void Fall(double delta)
@@ -97,7 +98,7 @@ public partial class Bat : Node2D
 
     var newOffset = offsetMultiplier * MaxDistance;
 
-    Position = startPoint + new Vector2(0, newOffset);
+    Position = startPoint - new Vector2(0, newOffset);
 
     angle += (float)(AngularVelocity * delta);
   }

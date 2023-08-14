@@ -4,9 +4,18 @@ public static class GameState
 {
   public static int CountdownValue { get; set; } = 5;
 
-  public static bool NinjaHit { get; set; } = false;
-  public static bool GameOver { get; set; } = false;
+  public static bool NinjaHit { get; set; }
+  public static bool GameOver { get; set; }
 
-  public static Dictionary<ulong, bool> BlobsHit { get; set; } = new();
-  public static Dictionary<ulong, bool> BatsHit { get; set; } = new();
+  public static Dictionary<string, bool> BlobsHit { get; set; }
+  public static Dictionary<string, bool> BatsHit { get; set; }
+
+  public static void Reset()
+  {
+    NinjaHit = false;
+    GameOver = false;
+
+    BlobsHit = new();
+    BatsHit = new();
+  }
 }

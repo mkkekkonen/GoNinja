@@ -1,8 +1,10 @@
 using Godot;
 using System;
 
-public partial class Blob : Node2D
+public partial class Blob : Node2D, IEnemy
 {
+  private Guid guid;
+
   private CharacterBody2D characterBody;
   private Sprite2D sprite;
   private AnimationPlayer animationPlayer;
@@ -11,16 +13,24 @@ public partial class Blob : Node2D
   {
     get
     {
-      return GameState.BlobsHit[GetInstanceId()];
+      try
+      {
+        return GameState.BlobsHit[guid.ToString()];
+      }
+      catch
+      {
+        return false;
+      }
     }
     set
     {
-      GameState.BlobsHit[GetInstanceId()] = value;
+      GameState.BlobsHit[guid.ToString()] = value;
     }
   }
 
   public override void _Ready()
   {
+    guid = Guid.NewGuid();
     Hit = false;
 
     characterBody = GetNode<CharacterBody2D>("CharacterBody2D");
@@ -42,22 +52,35 @@ public partial class Blob : Node2D
 
   public override void _PhysicsProcess(double delta)
   {
-    base._PhysicsProcess(delta);
-
     var visibilityNotifier = GetNode<VisibleOnScreenNotifier2D>("CharacterBody2D/VisibleOnScreenNotifier2D");
     if (Hit && !visibilityNotifier.IsOnScreen())
     {
-      GameState.BlobsHit.Remove(GetInstanceId());
       QueueFree();
     }
   }
 
-  public void OnAreaEntered(Area2D area)
+  public void Destroy()
+  {
+    if (!Hit)
+    {
+      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+
+      Hit = true;
+      Utils.DropCharacterBody2D(characterBody);
+    }
+  }
+
+  public void HitBySword(Area2D area)
   {
     if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
     {
-      HandleHit();
+      GetParent().EmitSignal("EnemyAreaEntered", guid.ToString());
     }
+  }
+
+  public string GetGuid()
+  {
+    return guid.ToString();
   }
 
   private bool StopAnimationIfHit()
@@ -88,17 +111,6 @@ public partial class Blob : Node2D
     if (Mathf.Abs(characterBody.Velocity.X) > 0)
     {
       animationPlayer.Play("move");
-    }
-  }
-
-  private void HandleHit()
-  {
-    if (!Hit)
-    {
-      sprite.Modulate = new Color(1, 0, 0, 0.5f);
-
-      Hit = true;
-      Utils.DropCharacterBody2D(characterBody);
     }
   }
 }

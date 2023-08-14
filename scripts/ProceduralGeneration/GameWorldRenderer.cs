@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -10,6 +11,7 @@ public class GameWorldRenderer
   private readonly int LAVA_LAYER_INDEX = 2;
   private readonly int WORLD_WIDTH = 24;
   private readonly int WORLD_HEIGHT = 14;
+  private readonly int SCALE = 6;
 
   private readonly Vector2I PILLAR_TOP_LEFT = new(2, 0);
   private readonly Vector2I PILLAR_TOP = new(3, 0);
@@ -31,8 +33,11 @@ public class GameWorldRenderer
   private readonly int renderEndX;
   private readonly int renderEndY;
 
+  private readonly PackedScene blobScene = GD.Load<PackedScene>("res://scenes/redBlob.tscn");
+  private readonly PackedScene batScene = GD.Load<PackedScene>("res://scenes/bat.tscn");
+
   private static GameWorldRenderer instance;
-  private Random random = new();
+  private Random random;
 
   private GameWorldRenderer()
   {
@@ -52,6 +57,11 @@ public class GameWorldRenderer
       instance ??= new GameWorldRenderer();
       return instance;
     }
+  }
+
+  public void Seed()
+  {
+    random = new Random(Guid.NewGuid().GetHashCode());
   }
 
   public void RenderPlatforms(TileMap tileMap)
@@ -115,6 +125,20 @@ public class GameWorldRenderer
           0
         );
       }
+    }
+  }
+
+  public void SpawnEnemies(Node parent, TileMap map, List<IEnemy> enemyList)
+  {
+    foreach ((var coords, var enemyType) in GameWorld.Instance.EnemyLocations)
+    {
+      var enemyScene = GetEnemyScene(enemyType);
+
+      var enemy = (Node2D)enemyScene.Instantiate();
+      enemyList.Add((IEnemy)enemy);
+
+      enemy.GlobalPosition = map.MapToLocal(coords) * SCALE;
+      parent.AddChild(enemy);
     }
   }
 
@@ -182,5 +206,14 @@ public class GameWorldRenderer
         );
       }
     }
+  }
+
+  private PackedScene GetEnemyScene(string enemyType)
+  {
+    return enemyType switch
+    {
+      "bat" => batScene,
+      _ => blobScene,
+    };
   }
 }

@@ -19,16 +19,16 @@ public class GameWorld
   private readonly int N_PLATFORMS = 75;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
-  private readonly int MIN_PLATFORM_Y_COORDINATE = 2;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
 
   private readonly string[] platformLabels = new string[] { "platform", "pillar" };
 
-  private Vector2I newPlatformTopLeft = new(24, 11);
+  private Vector2I newPlatformTopLeft;
 
-  private readonly List<AbstractPlatform> platforms = new();
+  private List<AbstractPlatform> platforms;
+  private List<(Vector2I, string)> enemyLocations;
 
-  private readonly Random random = new();
+  private Random random;
 
   private GameWorld() { }
 
@@ -40,8 +40,21 @@ public class GameWorld
     }
   }
 
+  public List<(Vector2I, string)> EnemyLocations
+  {
+    get
+    {
+      return enemyLocations;
+    }
+  }
+
   public void GeneratePlatforms()
   {
+    random = new Random(Guid.NewGuid().GetHashCode());
+    platforms = new();
+    enemyLocations = new();
+    newPlatformTopLeft = new(25, 11);
+
     for (var i = 0; i < N_PLATFORMS; i++)
     {
       var platform = GeneratePlatform();
@@ -93,6 +106,8 @@ public class GameWorld
     platform.Width = GetNewPlatformWidth();
     platform.TopLeft = newPlatformTopLeft;
 
+    TryCreateNewEnemyStartPosition(platform);
+
     return platform;
   }
 
@@ -109,5 +124,25 @@ public class GameWorld
     newPlatformTopLeft += topLeftIncrement;
 
     newPlatformTopLeft.Y = Math.Min(newPlatformTopLeft.Y, MAX_PLATFORM_Y_COORDINATE);
+  }
+
+  private void TryCreateNewEnemyStartPosition(AbstractPlatform platform)
+  {
+    var spawnEnemy = random.Next(4) == 0;
+
+    if (spawnEnemy)
+    {
+      var coordinateIndex = random.Next(platform.Coordinates.Count());
+      var platformCoordinates = platform.Coordinates[coordinateIndex];
+
+      var enemyCoordinates = new Vector2I(
+        platformCoordinates.X,
+        platformCoordinates.Y - 1
+      );
+
+      var enemyType = random.Next(2) == 0 ? "blob" : "bat";
+
+      enemyLocations.Add((enemyCoordinates, enemyType));
+    }
   }
 }

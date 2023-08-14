@@ -5,6 +5,8 @@ public partial class NinjaPhysics : CharacterBody2D
 {
   private Ninja ninja;
 
+  private readonly Transform2D flipX = new Transform2D(-1, 0, 0, 1, 0, 0);
+
   public const float Speed = 300.0f;
   public const float JumpVelocity = -450.0f;
   public const float Epsilon = 0.1f;
@@ -41,15 +43,13 @@ public partial class NinjaPhysics : CharacterBody2D
 
   private void HandleSpriteFlip()
   {
-    var sprite = GetNode<Sprite2D>("Sprite2D");
-
-    if (Velocity.X < 0 && !sprite.FlipH)
+    if (Velocity.X < 0 && Transform.Scale.Y > 0)
     {
-      sprite.FlipH = true;
+      Transform *= flipX;
     }
-    else if (Velocity.X > 0 && sprite.FlipH)
+    else if (Velocity.X > 0 && Transform.Scale.Y < 0)
     {
-      sprite.FlipH = false;
+      Transform *= flipX;
     }
   }
 

@@ -3,6 +3,8 @@ using System;
 
 public partial class BlobPhysics : CharacterBody2D
 {
+  private Blob blob;
+
   public const float Speed = 100.0f;
 
   public Vector2 Direction = new(1, 0);
@@ -10,10 +12,13 @@ public partial class BlobPhysics : CharacterBody2D
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+  public override void _Ready()
+  {
+    blob = (Blob)GetParent();
+  }
+
   public override void _PhysicsProcess(double delta)
   {
-    var blob = GetNode<Blob>("../../Blob");
-
     Vector2 velocity = Velocity;
 
     velocity = Fall(velocity, delta);
