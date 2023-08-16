@@ -35,6 +35,7 @@ public partial class GameWorldManager : Node2D
 		GameWorldRenderer.Instance.RenderLava(tileMap);
 
 		GameWorldRenderer.Instance.SpawnEnemies(this, tileMap, enemies);
+		GameWorldRenderer.Instance.CreateTreasure(this, tileMap);
 	}
 
 	private void OnEnemyAreaEntered(string enemyGuid)

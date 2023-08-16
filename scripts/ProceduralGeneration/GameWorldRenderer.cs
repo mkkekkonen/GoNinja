@@ -134,12 +134,22 @@ public class GameWorldRenderer
     {
       var enemyScene = GetEnemyScene(enemyType);
 
-      var enemy = (Node2D)enemyScene.Instantiate();
+      var enemy = enemyScene.Instantiate<Node2D>();
       enemyList.Add((IEnemy)enemy);
 
       enemy.GlobalPosition = map.MapToLocal(coords) * SCALE;
       parent.AddChild(enemy);
     }
+  }
+
+  public void CreateTreasure(Node parent, TileMap map)
+  {
+    var treasureScene = GD.Load<PackedScene>("res://scenes/treasure.tscn");
+    var treasure = treasureScene.Instantiate<Treasure>();
+    treasure.GlobalPosition = map.MapToLocal(GameWorld.Instance.TreasureLocation) * SCALE;
+
+    GameWorld.Instance.Treasure = treasure;
+    parent.AddChild(treasure);
   }
 
   private Vector2I GetTileType(AbstractPlatform platform, Vector2I coordinates)

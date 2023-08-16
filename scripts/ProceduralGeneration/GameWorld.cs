@@ -16,7 +16,7 @@ public class GameWorld
     }
   }
 
-  private readonly int N_PLATFORMS = 75;
+  private readonly int N_PLATFORMS = 30;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
@@ -24,6 +24,7 @@ public class GameWorld
   private readonly string[] platformLabels = new string[] { "platform", "pillar" };
 
   private Vector2I newPlatformTopLeft;
+  private Vector2I treasureLocation;
 
   private List<AbstractPlatform> platforms;
   private List<(Vector2I, string)> enemyLocations;
@@ -48,6 +49,16 @@ public class GameWorld
     }
   }
 
+  public Vector2I TreasureLocation
+  {
+    get
+    {
+      return treasureLocation;
+    }
+  }
+
+  public Treasure Treasure { get; set; }
+
   public void GeneratePlatforms()
   {
     random = new Random(Guid.NewGuid().GetHashCode());
@@ -57,7 +68,7 @@ public class GameWorld
 
     for (var i = 0; i < N_PLATFORMS; i++)
     {
-      var platform = GeneratePlatform();
+      var platform = GeneratePlatform(i);
       platforms.Add(platform);
       IncrementNewPlatformTopLeft(platform);
     }
@@ -85,7 +96,7 @@ public class GameWorld
     return random.Next(MIN_PLATFORM_WIDTH, MAX_PLATFORM_WIDTH + 1);
   }
 
-  private AbstractPlatform GeneratePlatform()
+  private AbstractPlatform GeneratePlatform(int index)
   {
     var typeIndex = random.Next(platformLabels.Length);
     var platformType = platformLabels[typeIndex];
@@ -106,7 +117,14 @@ public class GameWorld
     platform.Width = GetNewPlatformWidth();
     platform.TopLeft = newPlatformTopLeft;
 
-    TryCreateNewEnemyStartPosition(platform);
+    if (index < N_PLATFORMS - 1)
+    {
+      TryCreateNewEnemyStartPosition(platform);
+    }
+    else
+    {
+      treasureLocation = GetRandomCoordinatesAbovePlatform(platform);
+    }
 
     return platform;
   }
@@ -132,17 +150,22 @@ public class GameWorld
 
     if (spawnEnemy)
     {
-      var coordinateIndex = random.Next(platform.Coordinates.Count());
-      var platformCoordinates = platform.Coordinates[coordinateIndex];
-
-      var enemyCoordinates = new Vector2I(
-        platformCoordinates.X,
-        platformCoordinates.Y - 1
-      );
+      var enemyCoordinates = GetRandomCoordinatesAbovePlatform(platform);
 
       var enemyType = random.Next(2) == 0 ? "blob" : "bat";
 
       enemyLocations.Add((enemyCoordinates, enemyType));
     }
+  }
+
+  private Vector2I GetRandomCoordinatesAbovePlatform(AbstractPlatform platform)
+  {
+    var coordinateIndex = random.Next(platform.Coordinates.Count());
+    var platformCoordinates = platform.Coordinates[coordinateIndex];
+
+    return new Vector2I(
+      platformCoordinates.X,
+      platformCoordinates.Y - 1
+    );
   }
 }
