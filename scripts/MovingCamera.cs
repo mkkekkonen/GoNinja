@@ -1,16 +1,25 @@
 using Godot;
 using System;
+using System.Linq;
+
 
 public partial class MovingCamera : Node2D
 {
+	private int SCALE = 6;
+
 	private float maxY;
 	private bool moving = false;
 
 	private Vector2 velocity = new(150, 0);
 
-	// Called when the node enters the scene tree for the first time.
+	private CharacterBody2D ninjaCharacterBody;
+	private TileMap tileMap;
+
 	public override void _Ready()
 	{
+		ninjaCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
+		tileMap = GetNode<TileMap>("../TileMap");
+
 		var window = GetWindow();
 
 		maxY = window.Size.Y * .75f;
@@ -22,7 +31,14 @@ public partial class MovingCamera : Node2D
 	{
 		if (moving && !GameState.GameOver)
 		{
-			var ninjaCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
+			var lastPlatform = GameWorld.Instance.Platforms.Last();
+			var lastCoordinates = lastPlatform.Coordinates.Last();
+			var lastLocalCoordinates = tileMap.MapToLocal(lastCoordinates) * SCALE;
+
+			if (GlobalPosition.X > lastLocalCoordinates.X)
+			{
+				return;
+			}
 
 			var newPosition = GlobalPosition;
 

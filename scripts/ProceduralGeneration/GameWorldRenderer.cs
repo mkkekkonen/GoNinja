@@ -9,8 +9,8 @@ public class GameWorldRenderer
   private readonly int BG_LAYER_INDEX = 0;
   private readonly int FG_LAYER_INDEX = 1;
   private readonly int LAVA_LAYER_INDEX = 2;
-  private readonly int WORLD_WIDTH = 24;
-  private readonly int WORLD_HEIGHT = 14;
+  private readonly int WINDOW_WIDTH_TILES = 24;
+  private readonly int WINDOW_HEIGHT_TILES = 14;
   private readonly int SCALE = 6;
 
   private readonly Vector2I PILLAR_TOP_LEFT = new(2, 0);
@@ -41,13 +41,10 @@ public class GameWorldRenderer
 
   private GameWorldRenderer()
   {
-    var worldWidthHalved = WORLD_WIDTH / 2;
-    var worldHeightHalved = WORLD_HEIGHT / 2;
-
-    renderStartX = 0 - worldWidthHalved;
-    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - worldHeightHalved;
-    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + worldWidthHalved;
-    renderEndY = WORLD_BOTTOM_Y + worldHeightHalved;
+    renderStartX = -WINDOW_WIDTH_TILES;
+    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - WINDOW_HEIGHT_TILES;
+    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
+    renderEndY = WORLD_BOTTOM_Y;
   }
 
   public static GameWorldRenderer Instance

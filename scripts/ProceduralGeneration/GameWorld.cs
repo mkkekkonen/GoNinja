@@ -16,7 +16,8 @@ public class GameWorld
     }
   }
 
-  private readonly int N_PLATFORMS = 30;
+  // private readonly int N_PLATFORMS = 30;
+  private readonly int N_PLATFORMS = 7;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
