@@ -5,7 +5,6 @@ public partial class GameOver : Node2D
 {
 	private PackedScene menu;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GameState.GameOver = false;

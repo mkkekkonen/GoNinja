@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgqwsepla4it7"]
+
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_vri8a"]
+[ext_resource type="Script" path="res://scripts/GoToMenuButton.cs" id="2_ayi2o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1i724"]
+font = ExtResource("1_vri8a")
+font_size = 72
+
+[sub_resource type="Theme" id="Theme_er8ss"]
+default_font = ExtResource("1_vri8a")
+default_font_size = 40
+
+[node name="HighScores" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 67.0
+offset_right = 819.0
+offset_bottom = 170.0
+text = "High Scores 🏅"
+label_settings = SubResource("LabelSettings_1i724")
+
+[node name="MenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 506.0
+offset_right = 1021.0
+offset_bottom = 554.0
+theme = SubResource("Theme_er8ss")
+text = "Go to menu"
+script = ExtResource("2_ayi2o")
+
+[connection signal="pressed" from="MenuButton" to="MenuButton" method="GoToMenu"]

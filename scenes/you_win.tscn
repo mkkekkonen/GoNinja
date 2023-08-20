@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://cicnnf1hjgcne"]
+
+[ext_resource type="Script" path="res://scripts/YouWin.cs" id="1_fc8dn"]
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_wr7yw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bd7hn"]
+font = ExtResource("1_wr7yw")
+font_size = 60
+
+[node name="YouWin" type="Node2D"]
+visible = false
+z_index = 1
+script = ExtResource("1_fc8dn")
+
+[node name="OverlayColorRect" type="ColorRect" parent="."]
+offset_left = -450.0
+offset_top = -250.0
+offset_right = 450.0
+offset_bottom = 250.0
+color = Color(1, 1, 1, 0.290196)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -164.0
+offset_top = -174.0
+offset_right = 170.0
+offset_bottom = -71.0
+text = "You win! 🎉"
+label_settings = SubResource("LabelSettings_bd7hn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="MoveToHighScores"]

@@ -5,6 +5,13 @@ public partial class Treasure : Node2D
 {
 	private bool open = false;
 
+	private YouWin youWin;
+
+	public override void _Ready()
+	{
+		youWin = GetTree().Root.GetNode<YouWin>("Game/YouWin");
+	}
+
 	public void FinishLevel(Area2D area)
 	{
 		if (!open && area.Name == "NinjaArea2D")
@@ -16,6 +23,8 @@ public partial class Treasure : Node2D
 			sprite.Texture = treasureChestOpenTexture;
 
 			Position += new Vector2(3, -3);
+
+			youWin.Win();
 		}
 	}
 }

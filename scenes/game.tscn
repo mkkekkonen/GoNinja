@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxwb8nsxj65do"]
+[gd_scene load_steps=10 format=3 uid="uid://cxwb8nsxj65do"]
 
 [ext_resource type="Script" path="res://scripts/NinjaGame.cs" id="1_lqlek"]
 [ext_resource type="TileSet" uid="uid://bjkqigqwvc6kr" path="res://tilesets/ninja_tileset.tres" id="1_mmdf0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://urgx1jypu1ad" path="res://scenes/countdown.tscn" id="4_08esm"]
 [ext_resource type="PackedScene" uid="uid://cxmy5iwkqa6xa" path="res://scenes/game_world_manager.tscn" id="8_grktr"]
 [ext_resource type="PackedScene" uid="uid://cm36nawowlcgf" path="res://scenes/moving_camera.tscn" id="9_1j0jj"]
+[ext_resource type="PackedScene" uid="uid://cicnnf1hjgcne" path="res://scenes/you_win.tscn" id="9_46vqw"]
 [ext_resource type="PackedScene" uid="uid://cxg0hpe2a6s7v" path="res://scenes/game_over.tscn" id="10_y2dkf"]
 
 [node name="Game" type="Node2D"]
@@ -46,5 +47,7 @@ position = Vector2(575, 325)
 z_index = 1
 
 [node name="GameWorldManager" parent="." instance=ExtResource("8_grktr")]
+
+[node name="YouWin" parent="." instance=ExtResource("9_46vqw")]
 
 [connection signal="EnemyAreaEntered" from="GameWorldManager" to="GameWorldManager" method="OnEnemyAreaEntered"]
