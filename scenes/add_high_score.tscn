@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7edp263v3fu3"]
+
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_dr4tu"]
+[ext_resource type="Script" path="res://scripts/AddHighScore.cs" id="1_ii4wo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8auut"]
+font = ExtResource("1_dr4tu")
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_r4foa"]
+font = ExtResource("1_dr4tu")
+font_size = 70
+
+[sub_resource type="Theme" id="Theme_cs0of"]
+default_font = ExtResource("1_dr4tu")
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_kyal4"]
+default_font = ExtResource("1_dr4tu")
+default_font_size = 30
+
+[node name="AddHighScore" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ii4wo")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 202.0
+offset_right = 554.0
+offset_bottom = 255.0
+text = "Enter your name:"
+label_settings = SubResource("LabelSettings_8auut")
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 634.0
+offset_top = 284.0
+offset_right = 1045.0
+offset_bottom = 337.0
+text = "Your score: "
+label_settings = SubResource("LabelSettings_8auut")
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 79.0
+offset_right = 543.0
+offset_bottom = 152.0
+text = "High score!"
+label_settings = SubResource("LabelSettings_r4foa")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 317.0
+offset_right = 472.0
+offset_bottom = 392.0
+theme = SubResource("Theme_cs0of")
+placeholder_text = "(name)"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 271.0
+offset_top = 452.0
+offset_right = 339.0
+offset_bottom = 490.0
+theme = SubResource("Theme_kyal4")
+text = "Save"

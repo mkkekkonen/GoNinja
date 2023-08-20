@@ -21,6 +21,11 @@ public partial class Score : Control
 
 	private void ProcessTime(double delta)
 	{
+		if (GameState.Won || GameState.GameOver)
+		{
+			return;
+		}
+
 		GameState.GameTime += delta;
 
 		var minutes = (int)(GameState.GameTime / 60 % 60);
