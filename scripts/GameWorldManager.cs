@@ -6,6 +6,8 @@ using System.Linq;
 
 public partial class GameWorldManager : Node2D
 {
+	private readonly int ENEMY_SCORE_INCREMENT = 10;
+
 	private TileMap tileMap;
 	private readonly List<IEnemy> enemies = new();
 
@@ -44,6 +46,7 @@ public partial class GameWorldManager : Node2D
 		{
 			if (enemy != null && enemy.GetGuid() == enemyGuid)
 			{
+				GameState.Score += ENEMY_SCORE_INCREMENT;
 				enemies.Remove(enemy);
 				enemy.Destroy();
 				break;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxwb8nsxj65do"]
+[gd_scene load_steps=11 format=3 uid="uid://cxwb8nsxj65do"]
 
 [ext_resource type="Script" path="res://scripts/NinjaGame.cs" id="1_lqlek"]
 [ext_resource type="TileSet" uid="uid://bjkqigqwvc6kr" path="res://tilesets/ninja_tileset.tres" id="1_mmdf0"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cxmy5iwkqa6xa" path="res://scenes/game_world_manager.tscn" id="8_grktr"]
 [ext_resource type="PackedScene" uid="uid://cm36nawowlcgf" path="res://scenes/moving_camera.tscn" id="9_1j0jj"]
 [ext_resource type="PackedScene" uid="uid://cicnnf1hjgcne" path="res://scenes/you_win.tscn" id="9_46vqw"]
+[ext_resource type="PackedScene" uid="uid://bkdhlm5kbnpd4" path="res://scenes/score.tscn" id="10_k0lr6"]
 [ext_resource type="PackedScene" uid="uid://cxg0hpe2a6s7v" path="res://scenes/game_over.tscn" id="10_y2dkf"]
 
 [node name="Game" type="Node2D"]
@@ -42,6 +43,17 @@ position = Vector2(575, 325)
 
 [node name="Lava" parent="MovingCamera" instance=ExtResource("3_2a8g3")]
 position = Vector2(575, 325)
+
+[node name="Score" parent="MovingCamera" instance=ExtResource("10_k0lr6")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -589.0
+offset_top = -306.0
+offset_right = -589.0
+offset_bottom = -306.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="GameOver" parent="." instance=ExtResource("10_y2dkf")]
 z_index = 1
