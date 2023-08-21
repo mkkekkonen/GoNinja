@@ -59,7 +59,7 @@ public partial class Bat : Node2D, IEnemy
     {
       if (!Hit)
       {
-        GetParent().EmitSignal("EnemyAreaEntered", guid.ToString());
+        GetNode<Node2D>("../../../GameWorldManager").EmitSignal("EnemyAreaEntered", guid.ToString());
       }
     }
   }

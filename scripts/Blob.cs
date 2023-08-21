@@ -74,7 +74,7 @@ public partial class Blob : Node2D, IEnemy
   {
     if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
     {
-      GetParent().EmitSignal("EnemyAreaEntered", guid.ToString());
+      GetNode<Node2D>("../../../GameWorldManager").EmitSignal("EnemyAreaEntered", guid.ToString());
     }
   }
 

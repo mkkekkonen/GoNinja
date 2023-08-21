@@ -9,6 +9,7 @@ public partial class GameWorldManager : Node2D
 	private readonly int ENEMY_SCORE_INCREMENT = 10;
 
 	private TileMap tileMap;
+	private Node2D enemyContainer;
 	private readonly List<IEnemy> enemies = new();
 
 	[Signal]
@@ -25,6 +26,7 @@ public partial class GameWorldManager : Node2D
 	public override void _Ready()
 	{
 		tileMap = GetNode<TileMap>("../TileMap");
+		enemyContainer = GetNode<Node2D>("EnemyContainer");
 
 		GameState.Reset();
 
@@ -36,7 +38,7 @@ public partial class GameWorldManager : Node2D
 		GameWorldRenderer.Instance.RenderPlatforms(tileMap);
 		GameWorldRenderer.Instance.RenderLava(tileMap);
 
-		GameWorldRenderer.Instance.SpawnEnemies(this, tileMap, enemies);
+		GameWorldRenderer.Instance.SpawnEnemies(enemyContainer, tileMap, enemies);
 		GameWorldRenderer.Instance.CreateTreasure(this, tileMap);
 	}
 
