@@ -36,7 +36,6 @@ public partial class GameWorldManager : Node2D
 
 		GameWorldRenderer.Instance.RenderBackground(tileMap);
 		GameWorldRenderer.Instance.RenderPlatforms(tileMap);
-		GameWorldRenderer.Instance.RenderLava(tileMap);
 
 		GameWorldRenderer.Instance.SpawnEnemies(enemyContainer, tileMap, enemies);
 		GameWorldRenderer.Instance.CreateTreasure(this, tileMap);

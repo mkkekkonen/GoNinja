@@ -105,26 +105,6 @@ public class GameWorldRenderer
     }
   }
 
-  public void RenderLava(TileMap tileMap)
-  {
-    var startY = 17;
-    var endY = 22;
-
-    for (var x = renderStartX; x < renderEndX; x++)
-    {
-      for (var y = startY; y < endY; y++)
-      {
-        tileMap.SetCell(
-          LAVA_LAYER_INDEX,
-          new Vector2I(x, y),
-          0,
-          LAVA_TILE,
-          0
-        );
-      }
-    }
-  }
-
   public void SpawnEnemies(Node parent, TileMap map, List<IEnemy> enemyList)
   {
     foreach ((var coords, var enemyType) in GameWorld.Instance.EnemyLocations)
