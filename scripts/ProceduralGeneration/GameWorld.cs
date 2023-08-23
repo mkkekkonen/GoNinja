@@ -16,8 +16,8 @@ public class GameWorld
     }
   }
 
-  private readonly int N_PLATFORMS = 30;
-  // private readonly int N_PLATFORMS = 7;
+  // private readonly int N_PLATFORMS = 30;
+  private readonly int N_PLATFORMS = 7;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
@@ -28,7 +28,7 @@ public class GameWorld
   private Vector2I treasureLocation;
 
   private List<AbstractPlatform> platforms;
-  private List<(Vector2I, string)> enemyLocations;
+  private List<EnemyLocation> enemyLocations;
 
   private Random random;
 
@@ -42,7 +42,7 @@ public class GameWorld
     }
   }
 
-  public List<(Vector2I, string)> EnemyLocations
+  public List<EnemyLocation> EnemyLocations
   {
     get
     {
@@ -62,11 +62,6 @@ public class GameWorld
 
   public void GeneratePlatforms()
   {
-    random = new Random(Guid.NewGuid().GetHashCode());
-    platforms = new();
-    enemyLocations = new();
-    newPlatformTopLeft = new(25, 11);
-
     for (var i = 0; i < N_PLATFORMS; i++)
     {
       var platform = GeneratePlatform(i);
@@ -90,6 +85,14 @@ public class GameWorld
   public int GetFarthestPlatformEndXCoordinate()
   {
     return platforms.Last().Coordinates.Last().X;
+  }
+
+  public void Reset()
+  {
+    random = new Random(Guid.NewGuid().GetHashCode());
+    platforms = new();
+    enemyLocations = new();
+    newPlatformTopLeft = new(25, 11);
   }
 
   private int GetNewPlatformWidth()
@@ -118,14 +121,7 @@ public class GameWorld
     platform.Width = GetNewPlatformWidth();
     platform.TopLeft = newPlatformTopLeft;
 
-    if (index < N_PLATFORMS - 1)
-    {
-      TryCreateNewEnemyStartPosition(platform);
-    }
-    else
-    {
-      treasureLocation = GetRandomCoordinatesAbovePlatform(platform);
-    }
+    TryCreateNewEnemyStartPosition(platform);
 
     return platform;
   }
@@ -147,15 +143,20 @@ public class GameWorld
 
   private void TryCreateNewEnemyStartPosition(AbstractPlatform platform)
   {
-    var spawnEnemy = random.Next(4) == 0;
+    var generateEnemyLocation = random.Next(4) == 0;
 
-    if (spawnEnemy)
+    if (generateEnemyLocation)
     {
       var enemyCoordinates = GetRandomCoordinatesAbovePlatform(platform);
 
       var enemyType = random.Next(2) == 0 ? "blob" : "bat";
 
-      enemyLocations.Add((enemyCoordinates, enemyType));
+      enemyLocations.Add(new EnemyLocation
+      {
+        Location = enemyCoordinates,
+        EnemyType = enemyType,
+        Spawned = false,
+      });
     }
   }
 

@@ -28,10 +28,10 @@ public class GameWorldRenderer
   private readonly Vector2I GEMS_TILE = new(1, 0);
   private readonly Vector2I LAVA_TILE = new(1, 5);
 
-  private readonly int renderStartX;
-  private readonly int renderStartY;
-  private readonly int renderEndX;
-  private readonly int renderEndY;
+  private int renderStartX;
+  private int renderStartY;
+  private int renderEndX;
+  private int renderEndY;
 
   private readonly PackedScene blobScene = GD.Load<PackedScene>("res://scenes/redBlob.tscn");
   private readonly PackedScene batScene = GD.Load<PackedScene>("res://scenes/bat.tscn");
@@ -41,10 +41,7 @@ public class GameWorldRenderer
 
   private GameWorldRenderer()
   {
-    renderStartX = -WINDOW_WIDTH_TILES;
-    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - WINDOW_HEIGHT_TILES;
-    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
-    renderEndY = WORLD_BOTTOM_Y;
+    Reset();
   }
 
   public static GameWorldRenderer Instance
@@ -59,6 +56,14 @@ public class GameWorldRenderer
   public void Seed()
   {
     random = new Random(Guid.NewGuid().GetHashCode());
+  }
+
+  public void Reset()
+  {
+    renderStartX = -WINDOW_WIDTH_TILES;
+    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - WINDOW_HEIGHT_TILES;
+    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
+    renderEndY = WORLD_BOTTOM_Y;
   }
 
   public void RenderPlatforms(TileMap tileMap)
@@ -80,11 +85,17 @@ public class GameWorldRenderer
       {
         RenderPillarBase(platform, tileMap);
       }
+
+      platform.Rendered = true;
     }
   }
 
   public void RenderBackground(TileMap tileMap)
   {
+    if (renderEndX == renderStartX)
+    {
+      renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
+    }
 
     for (var x = renderStartX; x < renderEndX; x++)
     {
@@ -103,19 +114,26 @@ public class GameWorldRenderer
         );
       }
     }
+
+    // starting place for next render
+    renderStartX = renderEndX;
   }
 
   public void SpawnEnemies(Node parent, TileMap map, List<IEnemy> enemyList)
   {
-    foreach ((var coords, var enemyType) in GameWorld.Instance.EnemyLocations)
+    var notYetSpawned = GameWorld.Instance.EnemyLocations.Where(loc => !loc.Spawned);
+
+    foreach (var enemyLocation in notYetSpawned)
     {
-      var enemyScene = GetEnemyScene(enemyType);
+      var enemyScene = GetEnemyScene(enemyLocation.EnemyType);
 
       var enemy = enemyScene.Instantiate<Node2D>();
       enemyList.Add((IEnemy)enemy);
 
-      enemy.GlobalPosition = map.MapToLocal(coords) * SCALE;
+      enemy.GlobalPosition = map.MapToLocal(enemyLocation.Location) * SCALE;
       parent.AddChild(enemy);
+
+      enemyLocation.Spawned = true;
     }
   }
 

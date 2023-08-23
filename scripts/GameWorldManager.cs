@@ -29,16 +29,22 @@ public partial class GameWorldManager : Node2D
 		enemyContainer = GetNode<Node2D>("EnemyContainer");
 
 		GameState.Reset();
+		GameWorld.Instance.Reset();
 
+		GenerateAndRender(true);
+	}
+
+	public void GenerateAndRender(bool resetRenderer = false)
+	{
 		GameWorld.Instance.GeneratePlatforms();
 
 		GameWorldRenderer.Instance.Seed();
+		if (resetRenderer)
+			GameWorldRenderer.Instance.Reset();
 
 		GameWorldRenderer.Instance.RenderBackground(tileMap);
 		GameWorldRenderer.Instance.RenderPlatforms(tileMap);
-
 		GameWorldRenderer.Instance.SpawnEnemies(enemyContainer, tileMap, enemies);
-		GameWorldRenderer.Instance.CreateTreasure(this, tileMap);
 	}
 
 	private void OnEnemyAreaEntered(string enemyGuid)

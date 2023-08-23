@@ -6,8 +6,12 @@ public abstract class AbstractPlatform
   protected string label;
   protected List<Vector2I> coordinates;
 
-  public Vector2I TopLeft { get; set; }
   public int Width { get; set; }
+
+  public bool Rendered { get; set; } = false;
+
+  public Vector2I TopLeft { get; set; }
+
   public string Label
   {
     get

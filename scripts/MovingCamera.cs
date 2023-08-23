@@ -31,15 +31,6 @@ public partial class MovingCamera : Node2D
 	{
 		if (moving && !GameState.GameOver)
 		{
-			var lastPlatform = GameWorld.Instance.Platforms.Last();
-			var lastCoordinates = lastPlatform.Coordinates.Last();
-			var lastLocalCoordinates = tileMap.MapToLocal(lastCoordinates) * SCALE;
-
-			if (GlobalPosition.X > lastLocalCoordinates.X)
-			{
-				return;
-			}
-
 			var newPosition = GlobalPosition;
 
 			newPosition += velocity * (float)delta;

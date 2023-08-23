@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+
 
 public partial class Virtualizer : Node2D
 {
@@ -13,25 +15,29 @@ public partial class Virtualizer : Node2D
 	private TileMap tileMap;
 	private Node2D enemyContainer;
 
+	private GameWorldManager gameWorldManager;
+	private AbstractPlatform lastPlatform;
+
 	public override void _Ready()
 	{
 		camera = GetNode<Camera2D>("../MovingCamera/Camera2D");
 		tileMap = GetNode<TileMap>("../TileMap");
+		gameWorldManager = GetNode<GameWorldManager>("../GameWorldManager");
 		enemyContainer = GetNode<Node2D>("../GameWorldManager/EnemyContainer");
 	}
 
 	public override void _Process(double delta)
 	{
 		RemoveTilesBehindCamera();
+		TryCreateNewPlatforms();
 	}
 
 	private void RemoveTilesBehindCamera()
 	{
-		var windowSize = GetWindow().Size;
-		var windowXHalved = windowSize.X / 2;
+		var windowWidthHalved = GetWindow().Size.X / 2;
 
 		var cameraX = camera.GlobalPosition.X;
-		var cameraLeft = cameraX - windowXHalved;
+		var cameraLeft = cameraX - windowWidthHalved;
 
 		var rightTileColumn = (int)(cameraLeft / TILE_SIZE) - 1;
 
@@ -43,6 +49,23 @@ public partial class Virtualizer : Node2D
 			{
 				tileMap.SetCell(TILE_MAP_BACKGROUND_LAYER, new Vector2I(x, y));
 				tileMap.SetCell(TILE_MAP_FOREGROUND_LAYER, new Vector2I(x, y));
+			}
+		}
+	}
+
+	private void TryCreateNewPlatforms()
+	{
+		lastPlatform = GameWorld.Instance.Platforms.LastOrDefault();
+
+		if (lastPlatform != null)
+		{
+			var windowWidthHalved = GetWindow().Size.X / 2;
+			var cameraRightBoundary = camera.GlobalPosition.X + windowWidthHalved + CAMERA_MARGIN;
+			var cameraRightColumnX = (int)(cameraRightBoundary / TILE_SIZE);
+
+			if (lastPlatform.Coordinates.Last().X == cameraRightColumnX)
+			{
+				gameWorldManager.GenerateAndRender();
 			}
 		}
 	}
