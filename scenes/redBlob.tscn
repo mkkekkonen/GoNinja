@@ -70,17 +70,16 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_q2b05")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(0, -6)
 scale = Vector2(6, 6)
-texture = ExtResource("3_x1t4c")
+texture = ExtResource("1_7nuj7")
 
 [node name="RayCast2DLeft" type="RayCast2D" parent="CharacterBody2D"]
 position = Vector2(-21, -1)
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 28)
 
 [node name="RayCast2DRight" type="RayCast2D" parent="CharacterBody2D"]
 position = Vector2(21, -1)
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 28)
 
 [node name="BlobArea2D" type="Area2D" parent="CharacterBody2D"]
 collision_layer = 2

@@ -43,8 +43,8 @@ public partial class BlobPhysics : CharacterBody2D
     var rayCastLeft = GetNode<RayCast2D>("RayCast2DLeft");
     var rayCastRight = GetNode<RayCast2D>("RayCast2DRight");
 
-    var endOfPlatform = rayCastLeft.GetCollider() == null
-      || rayCastRight.GetCollider() == null;
+    var endOfPlatform = (direction.X > 0 && !rayCastRight.IsColliding())
+      || (direction.X < 0 && !rayCastLeft.IsColliding());
 
     if (IsOnWall() || endOfPlatform)
     {

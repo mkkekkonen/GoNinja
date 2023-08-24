@@ -9,7 +9,7 @@ public partial class Virtualizer : Node2D
 	private readonly int CAMERA_MARGIN = 200;
 	private readonly int TILE_MAP_BACKGROUND_LAYER = 0;
 	private readonly int TILE_MAP_FOREGROUND_LAYER = 1;
-	private readonly float ENEMY_DELETION_X_THRESHOLD = -200;
+	private readonly float ENEMY_DELETION_X_THRESHOLD = 200;
 
 	private Camera2D camera;
 	private TileMap tileMap;
@@ -49,6 +49,14 @@ public partial class Virtualizer : Node2D
 			{
 				tileMap.SetCell(TILE_MAP_BACKGROUND_LAYER, new Vector2I(x, y));
 				tileMap.SetCell(TILE_MAP_FOREGROUND_LAYER, new Vector2I(x, y));
+			}
+		}
+
+		foreach (Node2D enemy in enemyContainer.GetChildren())
+		{
+			if (enemy.GlobalPosition.X < (cameraLeft - ENEMY_DELETION_X_THRESHOLD))
+			{
+				enemy.QueueFree();
 			}
 		}
 	}
