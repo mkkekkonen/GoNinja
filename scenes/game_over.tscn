@@ -27,7 +27,7 @@ text = "Game over"
 label_settings = SubResource("LabelSettings_v47p5")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 one_shot = true
 
-[connection signal="timeout" from="Timer" to="." method="GoToMenu"]
+[connection signal="timeout" from="Timer" to="." method="GoToHighScores"]
