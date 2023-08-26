@@ -21,7 +21,7 @@ public partial class Score : Control
 
 	private void ProcessTime(double delta)
 	{
-		if (GameState.Won || GameState.GameOver)
+		if (GameState.CountdownValue != 0 || GameState.Won || GameState.GameOver)
 		{
 			return;
 		}
