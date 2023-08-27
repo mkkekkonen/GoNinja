@@ -3,12 +3,8 @@ using System;
 
 public partial class AddHighScore : Control
 {
-	private PackedScene menu;
-
 	public override void _Ready()
 	{
-		menu = ResourceLoader.Load<PackedScene>(Constants.MENU_SCENE_PATH);
-
 		GetNode<Label>("ScoreLabel").Text = $"Your score: {GameState.TotalScore}";
 	}
 
@@ -25,6 +21,6 @@ public partial class AddHighScore : Control
 
 	public void GoToMenu()
 	{
-		GetTree().ChangeSceneToPacked(menu);
+		GetTree().ChangeSceneToPacked(Constants.MENU_SCENE);
 	}
 }

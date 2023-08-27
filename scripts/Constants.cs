@@ -18,15 +18,15 @@ public static class Constants
   private static readonly float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
   private static readonly float gravityConstant = 9.81f;
 
-  private static readonly string scoreFilePath = "user://ninjaScores23.json";
-  private static readonly string addHighScoreScenePath = "res://scenes/add_high_score.tscn";
-  private static readonly string highScoresScenePath = "res://scenes/high_scores.tscn";
-  private static readonly string menuScenePath = "res://scenes/menu.tscn";
-  private static readonly string lavaAnimatedSpritePath = "res://scenes/lavaAnimatedSprite.tscn";
-  private static readonly string gameScenePath = "res://scenes/game.tscn";
-  private static readonly string redBlobPath = "res://scenes/redBlob.tscn";
-  private static readonly string batPath = "res://scenes/bat.tscn";
+  private static readonly PackedScene addHighScoreScene = ResourceLoader.Load<PackedScene>("res://scenes/add_high_score.tscn");
+  private static readonly PackedScene highScoresScene = ResourceLoader.Load<PackedScene>("res://scenes/high_scores.tscn");
+  private static readonly PackedScene menuScene = ResourceLoader.Load<PackedScene>("res://scenes/menu.tscn");
+  private static readonly PackedScene lavaAnimatedSpriteScene = ResourceLoader.Load<PackedScene>("res://scenes/lavaAnimatedSprite.tscn");
+  private static readonly PackedScene gameScene = ResourceLoader.Load<PackedScene>("res://scenes/game.tscn");
+  private static readonly PackedScene redBlobScene = ResourceLoader.Load<PackedScene>("res://scenes/redBlob.tscn");
+  private static readonly PackedScene batScene = ResourceLoader.Load<PackedScene>("res://scenes/bat.tscn");
 
+  private static readonly string scoreFilePath = "user://ninjaScores23.json";
   private static readonly string lavaTileFramesResourcePath = "res://resources/lava_tiles_frame_resource.tres";
   private static readonly string spriteSheetPath = "res://img/sheet.png";
 
@@ -156,6 +156,66 @@ public static class Constants
 
   #region ScenePaths
 
+  public static PackedScene ADD_HIGH_SCORES_SCENE
+  {
+    get
+    {
+      return addHighScoreScene;
+    }
+  }
+
+  public static PackedScene HIGH_SCORES_SCENE
+  {
+    get
+    {
+      return highScoresScene;
+    }
+  }
+
+  public static PackedScene MENU_SCENE
+  {
+    get
+    {
+      return menuScene;
+    }
+  }
+
+  public static PackedScene LAVA_ANIMATED_SPRITE
+  {
+    get
+    {
+      return lavaAnimatedSpriteScene;
+    }
+  }
+
+  public static PackedScene GAME_SCENE
+  {
+    get
+    {
+      return gameScene;
+    }
+  }
+
+  public static PackedScene RED_BLOB_SCENE
+  {
+    get
+    {
+      return redBlobScene;
+    }
+  }
+
+  public static PackedScene BAT_SCENE
+  {
+    get
+    {
+      return batScene;
+    }
+  }
+
+  #endregion
+
+  #region ResourcePaths
+
   public static string SCORE_FILE_PATH
   {
     get
@@ -163,66 +223,6 @@ public static class Constants
       return scoreFilePath;
     }
   }
-
-  public static string ADD_HIGH_SCORES_SCENE_PATH
-  {
-    get
-    {
-      return addHighScoreScenePath;
-    }
-  }
-
-  public static string HIGH_SCORES_SCENE_PATH
-  {
-    get
-    {
-      return highScoresScenePath;
-    }
-  }
-
-  public static string MENU_SCENE_PATH
-  {
-    get
-    {
-      return menuScenePath;
-    }
-  }
-
-  public static string LAVA_ANIMATED_SPRITE_PATH
-  {
-    get
-    {
-      return lavaAnimatedSpritePath;
-    }
-  }
-
-  public static string GAME_SCENE_PATH
-  {
-    get
-    {
-      return gameScenePath;
-    }
-  }
-
-  public static string RED_BLOB_PATH
-  {
-    get
-    {
-      return redBlobPath;
-    }
-  }
-
-  public static string BAT_PATH
-  {
-    get
-    {
-      return batPath;
-    }
-  }
-
-  #endregion
-
-  #region ResourcePaths
 
   public static string LAVA_TILE_FRAMES_RESOURCE_PATH
   {

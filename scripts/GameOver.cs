@@ -8,15 +8,9 @@ using System.Text.Json;
 
 public partial class GameOver : Node2D
 {
-	private PackedScene addHighScoreScene;
-	private PackedScene highScores;
-
 	public override void _Ready()
 	{
 		GameState.GameOver = false;
-
-		addHighScoreScene = ResourceLoader.Load<PackedScene>(Constants.ADD_HIGH_SCORES_SCENE_PATH);
-		highScores = ResourceLoader.Load<PackedScene>(Constants.HIGH_SCORES_SCENE_PATH);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,11 +39,11 @@ public partial class GameOver : Node2D
 
 		if (!fileExists || HasNewHighScore())
 		{
-			GetTree().ChangeSceneToPacked(addHighScoreScene);
+			GetTree().ChangeSceneToPacked(Constants.ADD_HIGH_SCORES_SCENE);
 		}
 		else
 		{
-			GetTree().ChangeSceneToPacked(highScores);
+			GetTree().ChangeSceneToPacked(Constants.HIGH_SCORES_SCENE);
 		}
 	}
 

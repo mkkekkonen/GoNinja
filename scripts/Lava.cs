@@ -12,13 +12,11 @@ public partial class Lava : Node2D
   {
     var window = GetWindow();
 
-    var lavaSprite = GD.Load<PackedScene>(Constants.LAVA_ANIMATED_SPRITE_PATH);
-
     var spriteCount = window.Size.X / Constants.SPRITE_DIMENSIONS;
 
     for (var i = 0; i < spriteCount; i++)
     {
-      var sprite = lavaSprite.Instantiate() as AnimatedSprite2D;
+      var sprite = Constants.LAVA_ANIMATED_SPRITE.Instantiate() as AnimatedSprite2D;
       var frameIndex = i % FRAMES_COUNT;
 
       sprite.Frame = frameIndex;

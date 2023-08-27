@@ -25,9 +25,7 @@ public partial class NewGameLabel : Label
 
     if (labelRect.HasPoint(clickPosition))
     {
-      var level1 = (PackedScene)ResourceLoader.Load(Constants.GAME_SCENE_PATH);
-
-      GetTree().ChangeSceneToPacked(level1);
+      GetTree().ChangeSceneToPacked(Constants.GAME_SCENE);
     }
   }
 }

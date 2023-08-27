@@ -25,9 +25,6 @@ public class GameWorldRenderer
   private int renderEndX;
   private int renderEndY;
 
-  private readonly PackedScene blobScene = GD.Load<PackedScene>(Constants.RED_BLOB_PATH);
-  private readonly PackedScene batScene = GD.Load<PackedScene>(Constants.BAT_PATH);
-
   private static GameWorldRenderer instance;
   private Random random;
 
@@ -209,8 +206,8 @@ public class GameWorldRenderer
   {
     return enemyType switch
     {
-      "bat" => batScene,
-      _ => blobScene,
+      "bat" => Constants.BAT_SCENE,
+      _ => Constants.RED_BLOB_SCENE,
     };
   }
 }
