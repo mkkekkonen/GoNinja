@@ -3,8 +3,6 @@ using System;
 
 public partial class Countdown : Node2D
 {
-	private readonly int SECONDS = 5;
-
 	private Label label;
 	private Timer timer;
 	private ColorRect overlay;
@@ -31,7 +29,7 @@ public partial class Countdown : Node2D
 	{
 		label.Visible = true;
 		overlay.Visible = true;
-		GameState.CountdownValue = SECONDS;
+		GameState.CountdownValue = Constants.COUNTDOWN_SECONDS;
 		label.Text = GameState.CountdownValue.ToString();
 
 		timer.Start();

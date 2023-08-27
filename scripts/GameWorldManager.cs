@@ -6,7 +6,7 @@ using System.Linq;
 
 public partial class GameWorldManager : Node2D
 {
-	private readonly int ENEMY_SCORE_INCREMENT = 10;
+	private readonly int ENEMY_SCORE_INCREMENT = 100;
 
 	private TileMap tileMap;
 	private Node2D enemyContainer;

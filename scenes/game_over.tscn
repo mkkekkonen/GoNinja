@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxg0hpe2a6s7v"]
+[gd_scene load_steps=4 format=3 uid="uid://cyr2xoaj1d4av"]
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_narem"]
 [ext_resource type="Script" path="res://scripts/GameOver.cs" id="1_towm8"]

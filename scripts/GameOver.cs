@@ -8,8 +8,6 @@ using System.Text.Json;
 
 public partial class GameOver : Node2D
 {
-	private readonly string SCORE_FILE_PATH = "user://ninjaScores23.json";
-
 	private PackedScene addHighScoreScene;
 	private PackedScene highScores;
 
@@ -17,8 +15,8 @@ public partial class GameOver : Node2D
 	{
 		GameState.GameOver = false;
 
-		addHighScoreScene = ResourceLoader.Load<PackedScene>("res://scenes/add_high_score.tscn");
-		highScores = ResourceLoader.Load<PackedScene>("res://scenes/high_scores.tscn");
+		addHighScoreScene = ResourceLoader.Load<PackedScene>(Constants.ADD_HIGH_SCORES_SCENE_PATH);
+		highScores = ResourceLoader.Load<PackedScene>(Constants.HIGH_SCORES_SCENE_PATH);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,7 +41,7 @@ public partial class GameOver : Node2D
 
 	public void GoToHighScores()
 	{
-		var fileExists = File.Exists(SCORE_FILE_PATH);
+		var fileExists = File.Exists(Constants.SCORE_FILE_PATH);
 
 		if (!fileExists || HasNewHighScore())
 		{
@@ -82,7 +80,7 @@ public partial class GameOver : Node2D
 	{
 		try
 		{
-			var jsonText = File.ReadAllText(SCORE_FILE_PATH);
+			var jsonText = File.ReadAllText(Constants.SCORE_FILE_PATH);
 			return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
 		}
 		catch

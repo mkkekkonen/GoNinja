@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public partial class LavaTileFramesResource : Resource
 {
-  private readonly int TILE_DIMENSIONS = 8;
   private readonly int FRAMES_COUNT = 8;
 
   private readonly IReadOnlyList<(int, int)> _coords = new List<(int, int)> {
@@ -23,7 +22,7 @@ public partial class LavaTileFramesResource : Resource
 
   public LavaTileFramesResource()
   {
-    var sheetTexture = (Texture2D)ResourceLoader.Load("res://img/sheet.png");
+    var sheetTexture = (Texture2D)ResourceLoader.Load(Constants.SPRITE_SHEET_PATH);
 
     if (sheetTexture != null)
     {
@@ -46,9 +45,14 @@ public partial class LavaTileFramesResource : Resource
 
   private Texture2D ExtractTexture(int x, int y)
   {
-    var frameRect = new Rect2I(x, y, TILE_DIMENSIONS, TILE_DIMENSIONS);
+    var frameRect = new Rect2I(x, y, Constants.TILE_DIMENSIONS, Constants.TILE_DIMENSIONS);
 
-    var clippedImg = Image.Create(TILE_DIMENSIONS, TILE_DIMENSIONS, true, Image.Format.Rgba8);
+    var clippedImg = Image.Create(
+      Constants.TILE_DIMENSIONS,
+      Constants.TILE_DIMENSIONS,
+      true,
+      Image.Format.Rgba8
+    );
     clippedImg.BlitRect(spriteSheetImage, frameRect, Vector2I.Zero);
 
     var frameTexture = ImageTexture.CreateFromImage(clippedImg);

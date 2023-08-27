@@ -7,7 +7,7 @@ public partial class GoToMenuButton : Button
 
 	public override void _Ready()
 	{
-		menu = ResourceLoader.Load<PackedScene>("res://scenes/menu.tscn");
+		menu = ResourceLoader.Load<PackedScene>(Constants.MENU_SCENE_PATH);
 	}
 
 	public void GoToMenu()

@@ -12,11 +12,11 @@ public partial class LavaTileAnimation : AnimatedSprite2D
   {
     try
     {
-      _lavaTileFramesResource = GD.Load<LavaTileFramesResource>("res://resources/lava_tiles_frame_resource.tres");
+      _lavaTileFramesResource = GD.Load<LavaTileFramesResource>(Constants.LAVA_TILE_FRAMES_RESOURCE_PATH);
 
       SpriteFrames = new SpriteFrames();
 
-      var sheetTexture = (Texture2D)ResourceLoader.Load("res://img/sheet.png");
+      var sheetTexture = (Texture2D)ResourceLoader.Load(Constants.SPRITE_SHEET_PATH);
 
       foreach (var texture in _lavaTileFramesResource.Textures)
       {

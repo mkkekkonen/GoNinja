@@ -11,9 +11,6 @@ public partial class NinjaPhysics : CharacterBody2D
   public const float JumpVelocity = -450.0f;
   public const float Epsilon = 0.1f;
 
-  // Get the gravity from the project settings to be synced with RigidBody nodes.
-  public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
   public override void _Ready()
   {
     ninja = GetNode<Ninja>("../../Ninja");
@@ -79,7 +76,7 @@ public partial class NinjaPhysics : CharacterBody2D
   private Vector2 Fall(double delta, Vector2 velocity)
   {
     if (!IsOnFloor())
-      velocity.Y += gravity * (float)delta;
+      velocity.Y += Constants.GRAVITY * (float)delta;
 
     return velocity;
   }

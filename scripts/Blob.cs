@@ -63,7 +63,7 @@ public partial class Blob : Node2D, IEnemy
   {
     if (!Hit)
     {
-      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+      sprite.Modulate = Constants.DESTROYED_COLOR;
 
       Hit = true;
       Utils.DropCharacterBody2D(characterBody);
@@ -72,9 +72,10 @@ public partial class Blob : Node2D, IEnemy
 
   public void HitBySword(Area2D area)
   {
-    if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
+    if (area.Name == Constants.SWORD_AREA_NAME && !GameState.NinjaHit)
     {
-      GetNode<Node2D>("../../../GameWorldManager").EmitSignal("EnemyAreaEntered", guid.ToString());
+      GetNode<Node2D>("../../../GameWorldManager")
+        .EmitSignal(Constants.ENEMY_AREA_ENTERED_SIGNAL_NAME, guid.ToString());
     }
   }
 

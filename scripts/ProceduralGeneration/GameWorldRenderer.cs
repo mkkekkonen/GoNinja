@@ -5,14 +5,6 @@ using Godot;
 
 public class GameWorldRenderer
 {
-  private readonly int WORLD_BOTTOM_Y = 18;
-  private readonly int BG_LAYER_INDEX = 0;
-  private readonly int FG_LAYER_INDEX = 1;
-  private readonly int LAVA_LAYER_INDEX = 2;
-  private readonly int WINDOW_WIDTH_TILES = 24;
-  private readonly int WINDOW_HEIGHT_TILES = 14;
-  private readonly int SCALE = 6;
-
   private readonly Vector2I PILLAR_TOP_LEFT = new(2, 0);
   private readonly Vector2I PILLAR_TOP = new(3, 0);
   private readonly Vector2I PILLAR_TOP_RIGHT = new(4, 0);
@@ -33,8 +25,8 @@ public class GameWorldRenderer
   private int renderEndX;
   private int renderEndY;
 
-  private readonly PackedScene blobScene = GD.Load<PackedScene>("res://scenes/redBlob.tscn");
-  private readonly PackedScene batScene = GD.Load<PackedScene>("res://scenes/bat.tscn");
+  private readonly PackedScene blobScene = GD.Load<PackedScene>(Constants.RED_BLOB_PATH);
+  private readonly PackedScene batScene = GD.Load<PackedScene>(Constants.BAT_PATH);
 
   private static GameWorldRenderer instance;
   private Random random;
@@ -60,10 +52,10 @@ public class GameWorldRenderer
 
   public void Reset()
   {
-    renderStartX = -WINDOW_WIDTH_TILES;
-    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - WINDOW_HEIGHT_TILES;
-    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
-    renderEndY = WORLD_BOTTOM_Y;
+    renderStartX = -Constants.WINDOW_WIDTH_TILES;
+    renderStartY = GameWorld.Instance.GetHighestPlatformYCoordinate() - Constants.WINDOW_HEIGHT_TILES;
+    renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + Constants.WINDOW_WIDTH_TILES;
+    renderEndY = Constants.WORLD_BOTTOM_TILE_Y_COORDINATE;
   }
 
   public void RenderPlatforms(TileMap tileMap)
@@ -73,7 +65,7 @@ public class GameWorldRenderer
       foreach (var coordinates in platform.Coordinates)
       {
         tileMap.SetCell(
-          FG_LAYER_INDEX,
+          Constants.FG_TILE_LAYER_INDEX,
           coordinates,
           0,
           GetTileType(platform, coordinates),
@@ -81,7 +73,7 @@ public class GameWorldRenderer
         );
       }
 
-      if (platform.Label == "pillar")
+      if (platform.Label == Constants.PILLAR_LABEL)
       {
         RenderPillarBase(platform, tileMap);
       }
@@ -94,7 +86,7 @@ public class GameWorldRenderer
   {
     if (renderEndX == renderStartX)
     {
-      renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + WINDOW_WIDTH_TILES;
+      renderEndX = GameWorld.Instance.GetFarthestPlatformEndXCoordinate() + Constants.WINDOW_WIDTH_TILES;
     }
 
     for (var x = renderStartX; x < renderEndX; x++)
@@ -106,7 +98,7 @@ public class GameWorldRenderer
           : BG_TILE;
 
         tileMap.SetCell(
-          BG_LAYER_INDEX,
+          Constants.BG_TILE_LAYER_INDEX,
           new Vector2I(x, y),
           0,
           tileAtlasCoords,
@@ -130,7 +122,7 @@ public class GameWorldRenderer
       var enemy = enemyScene.Instantiate<Node2D>();
       enemyList.Add((IEnemy)enemy);
 
-      enemy.GlobalPosition = map.MapToLocal(enemyLocation.Location) * SCALE;
+      enemy.GlobalPosition = map.MapToLocal(enemyLocation.Location) * Constants.SCALE;
       parent.AddChild(enemy);
 
       enemyLocation.Spawned = true;
@@ -141,7 +133,7 @@ public class GameWorldRenderer
   {
     var treasureScene = GD.Load<PackedScene>("res://scenes/treasure.tscn");
     var treasure = treasureScene.Instantiate<Treasure>();
-    treasure.GlobalPosition = map.MapToLocal(GameWorld.Instance.TreasureLocation) * SCALE;
+    treasure.GlobalPosition = map.MapToLocal(GameWorld.Instance.TreasureLocation) * Constants.SCALE;
 
     GameWorld.Instance.Treasure = treasure;
     parent.AddChild(treasure);
@@ -151,7 +143,7 @@ public class GameWorldRenderer
   {
     var widthVector = new Vector2I(platform.Width - 1, 0);
 
-    if (platform.Label == "pillar")
+    if (platform.Label == Constants.PILLAR_LABEL)
     {
       if (coordinates == platform.TopLeft)
       {
@@ -164,7 +156,7 @@ public class GameWorldRenderer
       return PILLAR_TOP;
     }
 
-    if (platform.Label == "platform")
+    if (platform.Label == Constants.PLATFORM_LABEL)
     {
       if (coordinates == platform.TopLeft)
       {
@@ -185,7 +177,7 @@ public class GameWorldRenderer
     var startX = pillar.TopLeft.X;
     var startY = pillar.TopLeft.Y + 1;
     var endX = pillar.Coordinates.Last().X;
-    var endY = WORLD_BOTTOM_Y;
+    var endY = Constants.WORLD_BOTTOM_TILE_Y_COORDINATE;
 
     for (var x = startX; x <= endX; x++)
     {
@@ -203,7 +195,7 @@ public class GameWorldRenderer
         }
 
         tileMap.SetCell(
-          FG_LAYER_INDEX,
+          Constants.FG_TILE_LAYER_INDEX,
           new Vector2I(x, y),
           0,
           atlasCoords,

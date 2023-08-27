@@ -7,7 +7,7 @@ public partial class AddHighScore : Control
 
 	public override void _Ready()
 	{
-		menu = ResourceLoader.Load<PackedScene>("res://scenes/menu.tscn");
+		menu = ResourceLoader.Load<PackedScene>(Constants.MENU_SCENE_PATH);
 
 		GetNode<Label>("ScoreLabel").Text = $"Your score: {GameState.TotalScore}";
 	}

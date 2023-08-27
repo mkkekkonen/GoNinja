@@ -5,11 +5,9 @@ using System.Linq;
 
 public partial class Virtualizer : Node2D
 {
-	private readonly int TILE_SIZE = 48;
 	private readonly int CAMERA_MARGIN = 200;
 	private readonly int TILE_MAP_BACKGROUND_LAYER = 0;
 	private readonly int TILE_MAP_FOREGROUND_LAYER = 1;
-	private readonly float ENEMY_DELETION_X_THRESHOLD = 200;
 
 	private Camera2D camera;
 	private TileMap tileMap;
@@ -39,7 +37,7 @@ public partial class Virtualizer : Node2D
 		var cameraX = camera.GlobalPosition.X;
 		var cameraLeft = cameraX - windowWidthHalved;
 
-		var rightTileColumn = (int)(cameraLeft / TILE_SIZE) - 1;
+		var rightTileColumn = (int)(cameraLeft / Constants.SPRITE_DIMENSIONS) - 1;
 
 		var usedRect = tileMap.GetUsedRect();
 
@@ -54,7 +52,7 @@ public partial class Virtualizer : Node2D
 
 		foreach (Node2D enemy in enemyContainer.GetChildren())
 		{
-			if (enemy.GlobalPosition.X < (cameraLeft - ENEMY_DELETION_X_THRESHOLD))
+			if (enemy.GlobalPosition.X < (cameraLeft - CAMERA_MARGIN))
 			{
 				enemy.QueueFree();
 			}
@@ -69,7 +67,7 @@ public partial class Virtualizer : Node2D
 		{
 			var windowWidthHalved = GetWindow().Size.X / 2;
 			var cameraRightBoundary = camera.GlobalPosition.X + windowWidthHalved + CAMERA_MARGIN;
-			var cameraRightColumnX = (int)(cameraRightBoundary / TILE_SIZE);
+			var cameraRightColumnX = (int)(cameraRightBoundary / Constants.SPRITE_DIMENSIONS);
 
 			if (lastPlatform.Coordinates.Last().X == cameraRightColumnX)
 			{

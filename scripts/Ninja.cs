@@ -9,8 +9,6 @@ public partial class Ninja : Node2D
 
   public bool Attacking { get; set; } = false;
 
-  public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
   public override void _Input(InputEvent @event)
   {
     base._Input(@event);
@@ -19,7 +17,7 @@ public partial class Ninja : Node2D
 
     var eventText = @event.AsText();
 
-    if (eventText == "Ctrl" && !Attacking)
+    if (eventText == Constants.ATTACK_KEY && !Attacking)
     {
       animationPlayer.Play("attack");
       Attacking = true;
@@ -61,7 +59,7 @@ public partial class Ninja : Node2D
     if (!GameState.NinjaHit)
     {
       var sprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
-      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+      sprite.Modulate = Constants.DESTROYED_COLOR;
 
       GameState.NinjaHit = true;
 

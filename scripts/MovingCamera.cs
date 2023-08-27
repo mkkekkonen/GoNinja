@@ -5,12 +5,10 @@ using System.Linq;
 
 public partial class MovingCamera : Node2D
 {
-	private int SCALE = 6;
-
 	private float maxY;
 	private bool moving = false;
 
-	private Vector2 velocity = new(150, 0);
+	private Vector2 velocity = new(Constants.CAMERA_SPEED_IN_SECONDS, 0);
 
 	private CharacterBody2D ninjaCharacterBody;
 	private TileMap tileMap;

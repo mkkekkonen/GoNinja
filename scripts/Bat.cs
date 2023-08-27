@@ -55,11 +55,12 @@ public partial class Bat : Node2D, IEnemy
 
   public void HitBySword(Area2D area)
   {
-    if (area.Name == "SwordArea2D" && !GameState.NinjaHit)
+    if (area.Name == Constants.SWORD_AREA_NAME && !GameState.NinjaHit)
     {
       if (!Hit)
       {
-        GetNode<Node2D>("../../../GameWorldManager").EmitSignal("EnemyAreaEntered", guid.ToString());
+        GetNode<Node2D>("../../../GameWorldManager")
+          .EmitSignal(Constants.ENEMY_AREA_ENTERED_SIGNAL_NAME, guid.ToString());
       }
     }
   }
@@ -69,7 +70,7 @@ public partial class Bat : Node2D, IEnemy
     if (!Hit)
     {
       var sprite = GetNode<Sprite2D>("Sprite2D");
-      sprite.Modulate = new Color(1, 0, 0, 0.5f);
+      sprite.Modulate = Constants.DESTROYED_COLOR;
 
       Hit = true;
     }
@@ -82,7 +83,7 @@ public partial class Bat : Node2D, IEnemy
 
   private void Fall(double delta)
   {
-    velocity += new Vector2(0, (float)(9.81f * delta * 10));
+    velocity += new Vector2(0, (float)(Constants.GRAVITY_CONSTANT * delta * 10));
 
     Position += velocity * new Vector2(0, (float)delta);
   }

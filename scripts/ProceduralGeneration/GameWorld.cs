@@ -16,13 +16,11 @@ public class GameWorld
     }
   }
 
-  // private readonly int N_PLATFORMS = 30;
-  private readonly int N_PLATFORMS = 7;
   private readonly int MIN_PLATFORM_WIDTH = 3;
   private readonly int MAX_PLATFORM_WIDTH = 8;
   private readonly int MAX_PLATFORM_Y_COORDINATE = 16;
 
-  private readonly string[] platformLabels = new string[] { "platform", "pillar" };
+  private readonly string[] platformLabels = new string[] { Constants.PLATFORM_LABEL, Constants.PILLAR_LABEL };
 
   private Vector2I newPlatformTopLeft;
   private Vector2I treasureLocation;
@@ -62,7 +60,7 @@ public class GameWorld
 
   public void GeneratePlatforms()
   {
-    for (var i = 0; i < N_PLATFORMS; i++)
+    for (var i = 0; i < Constants.PLATFORM_BATCH_SIZE; i++)
     {
       var platform = GeneratePlatform(i);
       platforms.Add(platform);

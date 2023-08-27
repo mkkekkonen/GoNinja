@@ -9,9 +9,6 @@ public partial class BlobPhysics : CharacterBody2D
 
   public Vector2 Direction = new(1, 0);
 
-  // Get the gravity from the project settings to be synced with RigidBody nodes.
-  public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
   public override void _Ready()
   {
     blob = (Blob)GetParent();
@@ -55,7 +52,7 @@ public partial class BlobPhysics : CharacterBody2D
   private Vector2 Fall(Vector2 velocity, double delta)
   {
     if (!IsOnFloor())
-      velocity.Y += gravity * (float)delta;
+      velocity.Y += Constants.GRAVITY * (float)delta;
 
     return velocity;
   }

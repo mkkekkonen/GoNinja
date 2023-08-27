@@ -2,6 +2,6 @@ public class Platform : AbstractPlatform
 {
   public Platform()
   {
-    label = "platform";
+    label = Constants.PLATFORM_LABEL;
   }
 }

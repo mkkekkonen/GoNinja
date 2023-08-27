@@ -3,6 +3,5 @@
 [ext_resource type="Script" path="res://scripts/LavaTileAnimation.cs" id="1_835u4"]
 
 [node name="LavaAnimatedSprite2D" type="AnimatedSprite2D"]
-position = Vector2(108, 102)
 scale = Vector2(6, 6)
 script = ExtResource("1_835u4")
