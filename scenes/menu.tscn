@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjn3ckuewu3cu"]
+[gd_scene load_steps=7 format=3 uid="uid://cjn3ckuewu3cu"]
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_huyk1"]
 [ext_resource type="Script" path="res://scripts/NewGameLabel.cs" id="2_7d0v4"]
 [ext_resource type="Texture2D" uid="uid://d2yw6ogpgcc2x" path="res://img/ninja_idle1.png" id="2_e2gjy"]
+[ext_resource type="Script" path="res://scripts/HighScoresLabel.cs" id="3_gt712"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_y7673"]
 font = ExtResource("1_huyk1")
@@ -35,7 +36,7 @@ offset_bottom = 159.0
 text = "GoNinja"
 label_settings = SubResource("LabelSettings_y7673")
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="MenuLabel" type="Label" parent="Panel"]
 layout_mode = 0
 offset_left = 462.0
 offset_top = 216.0
@@ -44,6 +45,16 @@ offset_bottom = 268.0
 text = "New Game"
 label_settings = SubResource("LabelSettings_4nx6e")
 script = ExtResource("2_7d0v4")
+
+[node name="HighScoresLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 445.0
+offset_top = 310.0
+offset_right = 695.0
+offset_bottom = 362.0
+text = "High Scores"
+label_settings = SubResource("LabelSettings_4nx6e")
+script = ExtResource("3_gt712")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 0

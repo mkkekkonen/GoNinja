@@ -1,5 +1,6 @@
 using Godot;
-using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 public static class Utils
 {
@@ -12,5 +13,20 @@ public static class Utils
 
     characterBody.SetCollisionLayerValue(3, true);
     characterBody.SetCollisionMaskValue(3, true);
+  }
+
+  public static List<HighScore> GetHighScores()
+  {
+    try
+    {
+      if (FileAccess.FileExists(Constants.SCORE_FILE_PATH))
+      {
+        var jsonText = FileAccess.GetFileAsString(Constants.SCORE_FILE_PATH);
+        return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
+      }
+    }
+    catch { }
+
+    return new();
   }
 }

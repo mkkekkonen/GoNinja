@@ -1,8 +1,6 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-
 
 public partial class HighScores : Control
 {
@@ -15,6 +13,11 @@ public partial class HighScores : Control
 
 	public override void _Ready()
 	{
+		if (GameState.HighScores.Count() == 0)
+		{
+			GameState.HighScores = Utils.GetHighScores();
+		}
+
 		labels = new();
 
 		var labelContainer = GetNode<Control>("HighScoreLabelContainer");

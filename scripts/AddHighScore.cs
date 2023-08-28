@@ -30,7 +30,7 @@ public partial class AddHighScore : Control
 
 		var fileContent = JsonSerializer.Serialize(GameState.HighScores);
 
-		using var file = Godot.FileAccess.Open(Constants.SCORE_FILE_PATH, Godot.FileAccess.ModeFlags.Write);
+		using var file = FileAccess.Open(Constants.SCORE_FILE_PATH, FileAccess.ModeFlags.Write);
 		file.StoreString(fileContent);
 
 		GetTree().ChangeSceneToPacked(Constants.HIGH_SCORES_SCENE);

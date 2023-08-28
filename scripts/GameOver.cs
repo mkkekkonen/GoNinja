@@ -59,7 +59,7 @@ public partial class GameOver : Node2D
 
 	private bool HasNewHighScore()
 	{
-		var highScores = ReadScoresFromFile();
+		var highScores = Utils.GetHighScores();
 
 		if (!highScores.Any() || (GameState.TotalScore > highScores.Last().Score))
 		{
@@ -68,22 +68,5 @@ public partial class GameOver : Node2D
 		}
 
 		return false;
-	}
-
-	private List<HighScore> ReadScoresFromFile()
-	{
-		try
-		{
-			if (Godot.FileAccess.FileExists(Constants.SCORE_FILE_PATH))
-			{
-				var jsonText = Godot.FileAccess.GetFileAsString(Constants.SCORE_FILE_PATH);
-				return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
-			}
-		}
-		catch
-		{
-		}
-
-		return new();
 	}
 }
