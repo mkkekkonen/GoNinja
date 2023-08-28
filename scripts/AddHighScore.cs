@@ -1,5 +1,6 @@
 using Godot;
-using System;
+using System.Linq;
+using System.Text.Json;
 
 public partial class AddHighScore : Control
 {
@@ -16,7 +17,23 @@ public partial class AddHighScore : Control
 		{
 			var validationLabel = GetNode<Label>("ValidationLabel");
 			validationLabel.Visible = true;
+			return;
 		}
+
+		GameState.HighScores.Add(new()
+		{
+			PlayerName = lineEdit.Text,
+			Score = GameState.TotalScore,
+		});
+
+		GameState.HighScores = GameState.HighScores.Take(10).ToList();
+
+		var fileContent = JsonSerializer.Serialize(GameState.HighScores);
+
+		using var file = Godot.FileAccess.Open(Constants.SCORE_FILE_PATH, Godot.FileAccess.ModeFlags.Write);
+		file.StoreString(fileContent);
+
+		GetTree().ChangeSceneToPacked(Constants.HIGH_SCORES_SCENE);
 	}
 
 	public void GoToMenu()

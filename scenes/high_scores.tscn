@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgqwsepla4it7"]
+[gd_scene load_steps=6 format=3 uid="uid://dgqwsepla4it7"]
 
+[ext_resource type="Script" path="res://scripts/HighScores.cs" id="1_dg3p7"]
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_vri8a"]
 [ext_resource type="Script" path="res://scripts/GoToMenuButton.cs" id="2_ayi2o"]
 
@@ -20,6 +21,7 @@ offset_top = 4.0
 offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dg3p7")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -27,7 +29,7 @@ offset_left = 310.0
 offset_top = 67.0
 offset_right = 819.0
 offset_bottom = 170.0
-text = "High Scores 🏅"
+text = "High Scores 🏆"
 label_settings = SubResource("LabelSettings_1i724")
 
 [node name="MenuButton" type="Button" parent="."]
@@ -39,5 +41,10 @@ offset_bottom = 554.0
 theme = SubResource("Theme_er8ss")
 text = "Go to menu"
 script = ExtResource("2_ayi2o")
+
+[node name="HighScoreLabelContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="MenuButton" to="MenuButton" method="GoToMenu"]

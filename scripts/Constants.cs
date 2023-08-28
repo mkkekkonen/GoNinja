@@ -26,8 +26,9 @@ public static class Constants
   private static readonly PackedScene redBlobScene = ResourceLoader.Load<PackedScene>("res://scenes/redBlob.tscn");
   private static readonly PackedScene batScene = ResourceLoader.Load<PackedScene>("res://scenes/bat.tscn");
 
-  private static readonly string scoreFilePath = "user://ninjaScores23.json";
+  private static readonly string scoreFilePath = "user://scores.dat";
   private static readonly string lavaTileFramesResourcePath = "res://resources/lava_tiles_frame_resource.tres";
+  private static readonly string highScoreLabelSettingsPath = "res://resources/high_score_label_settings.tres";
   private static readonly string spriteSheetPath = "res://img/sheet.png";
 
   private static string attackKey = "Ctrl";
@@ -229,6 +230,14 @@ public static class Constants
     get
     {
       return lavaTileFramesResourcePath;
+    }
+  }
+
+  public static string HIGH_SCORE_LABEL_SETTINGS_PATH
+  {
+    get
+    {
+      return highScoreLabelSettingsPath;
     }
   }
 

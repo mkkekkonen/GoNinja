@@ -24,7 +24,7 @@ public static class GameState
   public static Dictionary<string, bool> BlobsHit { get; set; }
   public static Dictionary<string, bool> BatsHit { get; set; }
 
-  public static List<HighScore> HighScores { get; set; }
+  public static List<HighScore> HighScores { get; set; } = new();
 
   public static void Reset()
   {

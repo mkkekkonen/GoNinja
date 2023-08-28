@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cp5i6ehr5nu5o"]
+
+[ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_rwp3h"]
+
+[resource]
+font = ExtResource("1_rwp3h")
+font_size = 50

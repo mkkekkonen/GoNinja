@@ -2,10 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_dr4tu"]
 [ext_resource type="Script" path="res://scripts/AddHighScore.cs" id="1_ii4wo"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8auut"]
-font = ExtResource("1_dr4tu")
-font_size = 50
+[ext_resource type="LabelSettings" uid="uid://cp5i6ehr5nu5o" path="res://resources/high_score_label_settings.tres" id="2_7v0ps"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_r4foa"]
 font = ExtResource("1_dr4tu")
@@ -39,7 +36,7 @@ offset_top = 202.0
 offset_right = 554.0
 offset_bottom = 255.0
 text = "Enter your name:"
-label_settings = SubResource("LabelSettings_8auut")
+label_settings = ExtResource("2_7v0ps")
 
 [node name="ScoreLabel" type="Label" parent="."]
 layout_mode = 0
@@ -48,7 +45,7 @@ offset_top = 284.0
 offset_right = 1045.0
 offset_bottom = 337.0
 text = "Your score: "
-label_settings = SubResource("LabelSettings_8auut")
+label_settings = ExtResource("2_7v0ps")
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0

@@ -74,12 +74,16 @@ public partial class GameOver : Node2D
 	{
 		try
 		{
-			var jsonText = File.ReadAllText(Constants.SCORE_FILE_PATH);
-			return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
+			if (Godot.FileAccess.FileExists(Constants.SCORE_FILE_PATH))
+			{
+				var jsonText = Godot.FileAccess.GetFileAsString(Constants.SCORE_FILE_PATH);
+				return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
+			}
 		}
 		catch
 		{
-			return new();
 		}
+
+		return new();
 	}
 }
