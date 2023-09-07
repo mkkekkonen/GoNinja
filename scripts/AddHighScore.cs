@@ -26,7 +26,10 @@ public partial class AddHighScore : Control
 			Score = GameState.TotalScore,
 		});
 
-		GameState.HighScores = GameState.HighScores.Take(10).ToList();
+		GameState.HighScores = GameState.HighScores
+			.OrderByDescending(score => score.Score)
+			.Take(Constants.MAX_HIGH_SCORES)
+			.ToList();
 
 		var fileContent = JsonSerializer.Serialize(GameState.HighScores);
 

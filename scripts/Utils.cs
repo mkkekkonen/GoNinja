@@ -1,5 +1,7 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 public static class Utils
@@ -22,10 +24,15 @@ public static class Utils
       if (FileAccess.FileExists(Constants.SCORE_FILE_PATH))
       {
         var jsonText = FileAccess.GetFileAsString(Constants.SCORE_FILE_PATH);
-        return JsonSerializer.Deserialize<List<HighScore>>(jsonText);
+        return JsonSerializer.Deserialize<List<HighScore>>(jsonText)
+          .OrderByDescending(score => score.Score)
+          .ToList();
       }
     }
-    catch { }
+    catch (Exception e)
+    {
+      GD.Print(e.Message);
+    }
 
     return new();
   }

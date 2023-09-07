@@ -14,6 +14,7 @@ public static class Constants
   private static readonly int windowWidthTiles = 24;
   private static readonly int windowHeightTiles = 14;
   private static readonly int scale = 6;
+  private static readonly int maxHighScores = 5;
 
   private static readonly float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
   private static readonly float gravityConstant = 9.81f;
@@ -134,6 +135,14 @@ public static class Constants
     get
     {
       return scale;
+    }
+  }
+
+  public static int MAX_HIGH_SCORES
+  {
+    get
+    {
+      return maxHighScores;
     }
   }
 

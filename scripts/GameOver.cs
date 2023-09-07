@@ -1,9 +1,5 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 
 public partial class GameOver : Node2D
@@ -35,7 +31,7 @@ public partial class GameOver : Node2D
 
 	public void GoToHighScores()
 	{
-		var fileExists = File.Exists(Constants.SCORE_FILE_PATH);
+		var fileExists = FileAccess.FileExists(Constants.SCORE_FILE_PATH);
 
 		if (!fileExists || HasNewHighScore())
 		{
@@ -61,7 +57,9 @@ public partial class GameOver : Node2D
 	{
 		var highScores = Utils.GetHighScores();
 
-		if (!highScores.Any() || (GameState.TotalScore > highScores.Last().Score))
+		if (!highScores.Any()
+			|| highScores.Count() < Constants.MAX_HIGH_SCORES
+			|| (GameState.TotalScore > highScores.Last().Score))
 		{
 			GameState.HighScores = highScores;
 			return true;

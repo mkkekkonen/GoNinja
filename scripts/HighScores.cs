@@ -35,14 +35,7 @@ public partial class HighScores : Control
 
 			labels.Add(label);
 
-			if (i < SCORES_PER_COLUMN)
-			{
-				label.Position = new(200, 200 + (i * 80));
-			}
-			else
-			{
-				label.Position = new(200 + LABEL_WIDTH, 200 + ((i - SCORES_PER_COLUMN) * 80));
-			}
+			label.Position = new(200, 200 + (i * 80));
 
 			labelContainer.AddChild(label);
 		}

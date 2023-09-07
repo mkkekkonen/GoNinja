@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cxwb8nsxj65do"]
+[gd_scene load_steps=14 format=3 uid="uid://cxwb8nsxj65do"]
 
 [ext_resource type="Script" path="res://scripts/NinjaGame.cs" id="1_lqlek"]
 [ext_resource type="TileSet" uid="uid://bjkqigqwvc6kr" path="res://tilesets/ninja_tileset.tres" id="1_mmdf0"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bkdhlm5kbnpd4" path="res://scenes/score.tscn" id="10_k0lr6"]
 [ext_resource type="PackedScene" uid="uid://cyr2xoaj1d4av" path="res://scenes/game_over.tscn" id="10_y2dkf"]
 [ext_resource type="PackedScene" uid="uid://d2o8lrig8besd" path="res://scenes/virtualizer.tscn" id="11_n2gad"]
+[ext_resource type="AudioStream" uid="uid://dohgkqc4220as" path="res://audio/music.mp3" id="12_waewb"]
+[ext_resource type="Script" path="res://scripts/MusicPlayer.cs" id="13_47ebq"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lqlek")
@@ -57,5 +59,9 @@ z_index = 1
 [node name="YouWin" parent="." instance=ExtResource("9_46vqw")]
 
 [node name="Virtualizer" parent="." instance=ExtResource("11_n2gad")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_waewb")
+script = ExtResource("13_47ebq")
 
 [connection signal="EnemyAreaEntered" from="GameWorldManager" to="GameWorldManager" method="OnEnemyAreaEntered"]

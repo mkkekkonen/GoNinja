@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjn3ckuewu3cu"]
+[gd_scene load_steps=9 format=3 uid="uid://cjn3ckuewu3cu"]
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_huyk1"]
 [ext_resource type="Script" path="res://scripts/NewGameLabel.cs" id="2_7d0v4"]
 [ext_resource type="Texture2D" uid="uid://d2yw6ogpgcc2x" path="res://img/ninja_idle1.png" id="2_e2gjy"]
 [ext_resource type="Script" path="res://scripts/HighScoresLabel.cs" id="3_gt712"]
+[ext_resource type="AudioStream" uid="uid://dohgkqc4220as" path="res://audio/music.mp3" id="5_djria"]
+[ext_resource type="Script" path="res://scripts/MusicPlayer.cs" id="6_xkgmm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_y7673"]
 font = ExtResource("1_huyk1")
@@ -63,3 +65,7 @@ offset_top = 367.0
 offset_right = 280.0
 offset_bottom = 563.0
 texture = ExtResource("2_e2gjy")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_djria")
+script = ExtResource("6_xkgmm")
