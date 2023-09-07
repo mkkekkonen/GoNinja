@@ -1,10 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7edp263v3fu3"]
+[gd_scene load_steps=8 format=3 uid="uid://c7edp263v3fu3"]
 
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_dr4tu"]
 [ext_resource type="Script" path="res://scripts/AddHighScore.cs" id="1_ii4wo"]
 [ext_resource type="LabelSettings" uid="uid://cp5i6ehr5nu5o" path="res://resources/high_score_label_settings.tres" id="2_7v0ps"]
-[ext_resource type="AudioStream" uid="uid://dohgkqc4220as" path="res://audio/music.mp3" id="4_kaji2"]
-[ext_resource type="Script" path="res://scripts/MusicPlayer.cs" id="5_a5mx3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_r4foa"]
 font = ExtResource("1_dr4tu")
@@ -95,10 +93,6 @@ offset_bottom = 432.0
 theme = SubResource("Theme_m1y68")
 theme_override_colors/font_color = Color(0.792157, 0, 0, 1)
 text = "Please enter a name"
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_kaji2")
-script = ExtResource("5_a5mx3")
 
 [connection signal="pressed" from="SaveButton" to="." method="SaveHighScore"]
 [connection signal="pressed" from="MenuButton" to="." method="GoToMenu"]

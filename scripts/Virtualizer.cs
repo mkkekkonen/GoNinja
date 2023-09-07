@@ -9,6 +9,8 @@ public partial class Virtualizer : Node2D
 	private readonly int TILE_MAP_BACKGROUND_LAYER = 0;
 	private readonly int TILE_MAP_FOREGROUND_LAYER = 1;
 
+	private double elapsedTime = 0;
+
 	private Camera2D camera;
 	private TileMap tileMap;
 	private Node2D enemyContainer;
@@ -26,7 +28,14 @@ public partial class Virtualizer : Node2D
 
 	public override void _Process(double delta)
 	{
-		RemoveTilesBehindCamera();
+		elapsedTime += delta;
+
+		if (elapsedTime > 2)
+		{
+			RemoveTilesBehindCamera();
+			elapsedTime -= 2;
+		}
+
 		TryCreateNewPlatforms();
 	}
 

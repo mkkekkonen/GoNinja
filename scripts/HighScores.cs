@@ -4,7 +4,6 @@ using System.Linq;
 
 public partial class HighScores : Control
 {
-	private readonly int SCORES_PER_COLUMN = 5;
 	private readonly int LABEL_WIDTH = 400;
 
 	private List<Label> labels;

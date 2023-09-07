@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgqwsepla4it7"]
+[gd_scene load_steps=6 format=3 uid="uid://dgqwsepla4it7"]
 
 [ext_resource type="Script" path="res://scripts/HighScores.cs" id="1_dg3p7"]
 [ext_resource type="FontFile" uid="uid://bkmwtiull0mpv" path="res://fonts/homespun.ttf" id="1_vri8a"]
 [ext_resource type="Script" path="res://scripts/GoToMenuButton.cs" id="2_ayi2o"]
-[ext_resource type="AudioStream" uid="uid://dohgkqc4220as" path="res://audio/music.mp3" id="4_t2rm2"]
-[ext_resource type="Script" path="res://scripts/MusicPlayer.cs" id="5_m3dc5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1i724"]
 font = ExtResource("1_vri8a")
@@ -48,9 +46,5 @@ script = ExtResource("2_ayi2o")
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_t2rm2")
-script = ExtResource("5_m3dc5")
 
 [connection signal="pressed" from="MenuButton" to="MenuButton" method="GoToMenu"]
