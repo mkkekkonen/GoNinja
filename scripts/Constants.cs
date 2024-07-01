@@ -18,6 +18,8 @@ public static class Constants
 
   private static readonly float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
   private static readonly float gravityConstant = 9.81f;
+  private static readonly float viewportX = 1152;
+  private static readonly float viewportY = 648;
 
   private static readonly PackedScene addHighScoreScene = ResourceLoader.Load<PackedScene>("res://scenes/add_high_score.tscn");
   private static readonly PackedScene highScoresScene = ResourceLoader.Load<PackedScene>("res://scenes/high_scores.tscn");
@@ -39,6 +41,7 @@ public static class Constants
   private static string enemyAreaEnteredSignalName = "EnemyAreaEntered";
 
   private static readonly Color destroyedColor = new Color(1, 0, 0, 0.5f);
+  private static readonly Color menuItemColor = new Color("#a68ed2");
 
   #region NumericValues
 
@@ -159,6 +162,22 @@ public static class Constants
     get
     {
       return gravityConstant;
+    }
+  }
+
+  public static float VIEWPORT_X
+  {
+    get
+    {
+      return viewportX;
+    }
+  }
+
+  public static float VIEWPORT_Y
+  {
+    get
+    {
+      return viewportY;
     }
   }
 
@@ -311,6 +330,14 @@ public static class Constants
     get
     {
       return destroyedColor;
+    }
+  }
+
+  public static Color MENU_ITEM_COLOR
+  {
+    get
+    {
+      return menuItemColor;
     }
   }
 

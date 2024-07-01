@@ -83,7 +83,7 @@ public partial class NinjaPhysics : CharacterBody2D
 
   private Vector2 HandleJump(Vector2 velocity)
   {
-    if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+    if (Input.IsActionJustPressed("jump") && IsOnFloor())
       velocity.Y = JumpVelocity;
 
     return velocity;
@@ -91,7 +91,7 @@ public partial class NinjaPhysics : CharacterBody2D
 
   private Vector2 HandleMove(Vector2 velocity)
   {
-    Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+    Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
     if (!(IsOnFloor() && ninja.Attacking) && direction != Vector2.Zero)
     {
       velocity.X = direction.X * Speed;

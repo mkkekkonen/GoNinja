@@ -5,8 +5,9 @@ using System.Linq;
 
 public partial class MovingCamera : Node2D
 {
-	private float maxY;
 	private bool moving = false;
+
+	private float maxY = Constants.VIEWPORT_Y * 0.75f;
 
 	private Vector2 velocity = new(Constants.CAMERA_SPEED_IN_SECONDS, 0);
 
@@ -18,11 +19,7 @@ public partial class MovingCamera : Node2D
 		ninjaCharacterBody = GetNode<CharacterBody2D>("../Ninja/CharacterBody2D");
 		tileMap = GetNode<TileMap>("../TileMap");
 
-		var window = GetWindow();
-
-		maxY = window.Size.Y * .75f;
-
-		Position = new Vector2(window.Size.X / 2, maxY);
+		Position = new Vector2(Constants.VIEWPORT_X / 2, maxY);
 	}
 
 	public override void _PhysicsProcess(double delta)

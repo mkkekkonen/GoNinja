@@ -13,12 +13,15 @@ public partial class Ninja : Node2D
   {
     base._Input(@event);
 
-    var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-    var eventText = @event.AsText();
+  }
 
-    if (eventText == Constants.ATTACK_KEY && !Attacking)
+  public override void _Process(double delta)
+  {
+    if (Input.IsActionJustPressed("attack"))
     {
+      var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
       animationPlayer.Play("attack");
       Attacking = true;
     }
