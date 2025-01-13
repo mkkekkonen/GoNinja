@@ -5,6 +5,7 @@ data = PackedByteArray(73, 68, 51, 2, 0, 0, 0, 0, 31, 118, 84, 83, 83, 0, 0, 19,
 loop = true
 
 [node name="BackgroundMusicPlayer" type="Node"]
+process_mode = 3
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMP3_h8f1f")
